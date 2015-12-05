@@ -7,11 +7,11 @@ import store from './store';
 import Home from './views/home';
 
 const App = () => {
-    return (<div>
-        <Provider store={store}>
-            <Home></Home>
-        </Provider>
-    </div>)
+  return (<div>
+    <Provider store={store}>
+      <Home></Home>
+    </Provider>
+  </div>)
 }
 
 render(<App/>, document.getElementById('app-root'));
