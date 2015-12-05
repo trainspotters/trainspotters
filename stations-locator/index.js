@@ -43,8 +43,8 @@ module.exports = {
   parseRecord: function(rawRecord) {
     return Object.assign({
       displayName: rawRecord.name,
-      lat: rawRecord.latitude,
-      lng: rawRecord.longitude,
+      lat: parseFloat(rawRecord.latitude, 10),
+      lng: parseFloat(rawRecord.longitude, 10),
       names: [rawRecord.name],
     });
   }
