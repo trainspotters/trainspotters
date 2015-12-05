@@ -1,0 +1,43 @@
+{
+  "name": "trainspotters-client",
+  "version": "0.0.0",
+  "description": "Trainspotter client webapp",
+  "main": "index.js",
+  "scripts": {
+    "start": "node devServer.js",
+    "build": "NODE_ENV=production webpack --progress --profile --colors",
+    "dev": "NODE_ENV=development npm start",
+    "dev:open": "concurrent 'npm run open' 'npm run dev'",
+    "open": "sleep 3 && open http://localhost:3000"
+  },
+  "keywords": [
+    "trainspotters",
+    "tfl",
+    "london"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "trainspotters-parser": "file:../parser"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.13",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-object-assign": "^1.2.1",
+    "babel-plugin-react-transform": "^1.1.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "clean-webpack-plugin": "^0.1.3",
+    "concurrently": "^1.0.0",
+    "connect-history-api-fallback": "^1.1.0",
+    "es5-shim": "^4.1.13",
+    "express": "^4.13.3",
+    "file-loader": "^0.8.4",
+    "html-webpack-plugin": "^1.6.1",
+    "imports-loader": "^0.6.5",
+    "webpack": "^1.9.11",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.2.1"
+  }
+}
