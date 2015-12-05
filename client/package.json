@@ -8,7 +8,12 @@
     "build": "NODE_ENV=production webpack --progress --profile --colors",
     "dev": "NODE_ENV=development npm start",
     "dev:open": "concurrent 'npm run open' 'npm run dev'",
-    "open": "sleep 3 && open http://localhost:3000"
+    "open": "sleep 3 && open http://localhost:3000",
+    "serve": "statik -p 3000 dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trainspotters/trainspotters.git"
   },
   "keywords": [
     "trainspotters",
@@ -42,6 +47,7 @@
     "file-loader": "^0.8.4",
     "html-webpack-plugin": "^1.6.1",
     "imports-loader": "^0.6.5",
+    "statik": "^1.4.6",
     "webpack": "^1.9.11",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.2.1"
