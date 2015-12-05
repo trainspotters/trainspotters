@@ -90,7 +90,7 @@ module.exports = {
   },
   getRawFromString: function(string) {
     return new Promise(function(resolve, reject) {
-      parse(string, options, function(error, records){
+      parse(string, OPTIONS, function(error, records){
         if (error) {
           reject(error);
         } else {
