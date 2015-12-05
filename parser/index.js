@@ -38,7 +38,7 @@ var TYPE_PARSERS = [
     regexp: new RegExp(`Topped up, (${STATION})`),
     extract: function(match) {
       return {
-        at: match[1],
+        at: match[1].trim() === '' ? undefined : match[1],
       };
     }
   },
@@ -110,5 +110,6 @@ module.exports = {
       parseDescription(rawRecord['Journey/Action']),
       extractNumbers(rawRecord)
     );
-  }
+  },
+  recordTypes: RECORD_TYPES,
 }

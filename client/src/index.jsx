@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
-import Home from './views/home';
+import RecordsImporter from './views/recordsImporter';
 
 const App = () => {
   return (<div>
     <Provider store={store}>
-      <Home></Home>
+      <RecordsImporter></RecordsImporter>
     </Provider>
   </div>)
 }
