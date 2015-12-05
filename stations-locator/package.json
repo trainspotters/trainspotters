@@ -1,0 +1,16 @@
+{
+  "name": "trainspotters-stations-locator",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [
+    "tfl",
+    "trains",
+    "transport"
+  ],
+  "author": "transpotters",
+  "license": "MIT",
+  "dependencies": {
+    "csv-parse": "^1.0.1"
+  }
+}
