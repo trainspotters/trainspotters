@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { increment, decrement } from '../../actions/counter';
+import { parseRecords } from '../../actions/records';
 
-export function Home ({counter, increment, decrement}) {
-  return (<div>
-    <div>{counter}</div>
-    <button onClick={increment}>+</button>
-    <button onClick={decrement}>-</button>
-  </div>);
+
+export class Home extends Component {
+  render() {
+    const {records, parseRecords} = this.props;
+    const { parsing, payload, error } = records;
+
+    return (<div>
+      <textarea ref={ node => this.input = node }></textarea>
+      <button onClick={() => { parseRecords(this.input.value) }}>Parse</button>
+      { parsing ? 'Parsing...' : <pre>{JSON.stringify(payload, null, 2)}</pre> }
+    </div>);
+  }
 }
-
-function mapStateToProps(counter) {
-  return { counter };
+function mapStateToProps({records}) {
+  return { records };
 }
 
 function mapActionsToProps (dispatch) {
   return {
-    increment: () => dispatch(increment()),
-    decrement: () => dispatch(decrement())
+    parseRecords: (records) => dispatch(parseRecords(records)),
   };
 }
 

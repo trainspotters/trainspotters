@@ -1,12 +1,6 @@
-import { combineReducer } from 'redux';
+import { combineReducers } from 'redux';
+import records from './records';
 
-export default function rootReducer(state = 0, {type}) {
-  switch (type) {
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
-    default:
-      return state;
-  }
-}
+export default combineReducers({
+  records
+});
