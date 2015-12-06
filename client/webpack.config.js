@@ -2,20 +2,17 @@ var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
-var fs = require('fs');
-
-var distDir = 'dist';
-var distPath = path.join(__dirname, distDir);
 
 var config = module.exports = {
   entry: {
     app: [
-      './src/index.jsx'
+      './src/index.jsx',
+      './style/index.css'
     ]
   },
   devtool: 'inline-source-map',
   output: {
-    path: distPath,
+    path: path.join(__dirname, 'dist'),
     filename: '[name].js'
   },
   resolve: {
@@ -31,8 +28,14 @@ var config = module.exports = {
       {
         test: /\.json$/,
         loaders: ['json']
-      }
+      }, {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader!cssnext-loader'
+      },
     ]
+  },
+  cssnext: {
+    browsers: "last 2 versions",
   },
   plugins: [
 
@@ -41,7 +44,7 @@ var config = module.exports = {
       'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"'
     }),
 
-    new CleanWebpackPlugin([distDir]),
+    new CleanWebpackPlugin(['dist']),
 
     new webpack.ProvidePlugin({
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
