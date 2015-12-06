@@ -5,11 +5,15 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import RecordsImporter from './views/recordsImporter';
+import MapStations from './views/map';
 
 const App = () => {
   return (<div>
     <Provider store={store}>
-      <RecordsImporter></RecordsImporter>
+      <div>
+        <RecordsImporter></RecordsImporter>
+        <MapStations></MapStations>
+      </div>
     </Provider>
   </div>)
 }

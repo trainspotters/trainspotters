@@ -27,6 +27,10 @@ var config = module.exports = {
         test: /\.jsx?$/,
         include: /src/,
         loaders: ['babel']
+      },
+      {
+        test: /\.json$/,
+        loaders: ['json']
       }
     ]
   },
