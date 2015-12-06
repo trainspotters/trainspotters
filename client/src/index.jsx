@@ -6,11 +6,13 @@ import store from './store';
 
 import RecordsImporter from './views/recordsImporter';
 import MapStations from './views/map';
+import TimeTable from './views/timetable'
 
 const App = () => {
   return (<div>
     <Provider store={store}>
       <div>
+        <TimeTable></TimeTable>
         <RecordsImporter></RecordsImporter>
         <MapStations></MapStations>
       </div>
