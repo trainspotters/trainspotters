@@ -13,7 +13,7 @@ export class RecordsImporter extends Component {
     return (<div>
       <textarea ref={ node => this.input = node }></textarea>
       <button onClick={() => { parseRecords(this.input.value) }}>Parse</button>
-      { parsing ? <div>Parsing...</div> : null}
+      { parsing ? <div>Parsing...</div> : ''}
       { this.renderError() }
       { this.renderRecords() }
     </div>);
