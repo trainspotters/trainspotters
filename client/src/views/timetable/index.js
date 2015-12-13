@@ -20,11 +20,21 @@ const Table = (props) => {
   var curRow = todaysWeekday
   var curCol = 0
   for (var i = 364; i >= 0; i--) {
-    cells.push(
-      <rect className="day"
-            width="11" height="11"
-            x={curCol*13} y={curRow*13}
-            fill={data[i]["color"]}/>)
+    if (data[i]["selected"]) {
+      cells.push(
+        <rect className="day"
+              width="11" height="11"
+              x={curCol*13} y={curRow*13}
+              fill={data[i]["color"]}
+              stroke="#555"
+              stroke-width="1px"/>)
+    } else {
+      cells.push(
+        <rect className="day"
+              width="11" height="11"
+              x={curCol*13} y={curRow*13}
+              fill={data[i]["color"]}/>)
+    }
     curRow++
     if (curRow == 7) {
       curRow = 0
@@ -61,7 +71,7 @@ const WeekDays = () =>
     <text text-anchor="middle" className="wday" dx="-10" dy="87">S</text>
   </g>
 
-const tableData = (records) => {
+const tableData = (records, selected) => {
   console.log("records:")
   console.log(records)
 
@@ -69,15 +79,17 @@ const tableData = (records) => {
     return emptyTableData()
   }
 
-  return collectCounts(records.payload).map(count => {
-    if (count == 0) return colors[0];
-    if (count <= 2) return colors[1];
-    if (count <= 6) return colors[2];
-    if (count <= 8) return colors[3];
-    return colors[4];
-  }).map(color => {
-    return {"color" : color}
+  return collectCounts(records.payload).map((count, num) => {
+    return {"color" : getColorByCount(count), "selected" : selected[num] == true}
   })
+}
+
+const getColorByCount = (count) => {
+  if (count == 0) return colors[0]
+  if (count <= 2) return colors[1]
+  if (count <= 6) return colors[2]
+  if (count <= 8) return colors[3]
+  return colors[4]
 }
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -121,7 +133,7 @@ export class TimeTable extends Component {
     return (
       <svg width="721" height="110" className="js-calendar-graph-svg">
         <g transform="translate(20, 20)">
-          <Table data={tableData(this.props.records)} todaysWeekday={6}/>
+          <Table data={tableData(this.props.records, {0: true, 3: true, 364: true})} todaysWeekday={6}/>
           <Months/>
           <WeekDays/>
         </g>
