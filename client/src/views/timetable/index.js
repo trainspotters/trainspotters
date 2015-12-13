@@ -61,23 +61,54 @@ const WeekDays = () =>
     <text text-anchor="middle" className="wday" dx="-10" dy="87">S</text>
   </g>
 
-const TableData = (records) => {
+const tableData = (records) => {
   console.log("records:")
   console.log(records)
 
   if (records.payload == undefined) {
-    return EmptyTableData()
+    return emptyTableData()
   }
 
-
-  var data = []
-  for (var i = 0; i < 365; i++) {
-    data.push({"color" : colors[Math.floor((Math.random() * 5))]})
-  }
-  return data
+  return collectCounts(records.payload).map(count => {
+    if (count == 0) return colors[0];
+    if (count <= 2) return colors[1];
+    if (count <= 6) return colors[2];
+    if (count <= 8) return colors[3];
+    return colors[4];
+  }).map(color => {
+    return {"color" : color}
+  })
 }
 
-const EmptyTableData = () => {
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+// a and b are javascript Date objects
+const dateDiffInDays = (a, b) => {
+  // Discard the time and time-zone information.
+  var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
+const collectCounts = (recordsPayload) => {
+  var diffToCount = {}
+  for (var i = 0; i < 365; i++) diffToCount[i] = 0
+
+  for (var i = 0; i < recordsPayload.length; i++) {
+    var diff = dateDiffInDays(recordsPayload[i].startAt, new Date())
+    if (diff < 365) {
+      diffToCount[diff] = diffToCount[diff] + 1
+    }
+  }
+  var res = []
+  for (var i = 0; i < 365; i++) {
+    res.push(diffToCount[i])
+  }
+  return res
+}
+
+const emptyTableData = () => {
   var data = []
   for (var i = 0; i < 365; i++) {
     data.push({"color" : colors[0]})
@@ -90,7 +121,7 @@ export class TimeTable extends Component {
     return (
       <svg width="721" height="110" className="js-calendar-graph-svg">
         <g transform="translate(20, 20)">
-          <Table data={TableData(this.props.records)} todaysWeekday={6}/>
+          <Table data={tableData(this.props.records)} todaysWeekday={6}/>
           <Months/>
           <WeekDays/>
         </g>
