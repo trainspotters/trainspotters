@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 const colors = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"]
 
@@ -7,9 +8,8 @@ const colors = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"]
 // todays_weekday = [0, 7)
 const Table = (props) => {
   console.log(props)
+  const { data, todaysWeekday } = props;
 
-  var data = props.data
-  var todaysWeekday = props.todaysWeekday
   // day -> row             , col
   // 0   -> todays_weekday  , ?
   // 364 -> ?               , 0
@@ -61,10 +61,26 @@ const WeekDays = () =>
     <text text-anchor="middle" className="wday" dx="-10" dy="87">S</text>
   </g>
 
-const TableData = () => {
+const TableData = (records) => {
+  console.log("records:")
+  console.log(records)
+
+  if (records.payload == undefined) {
+    return EmptyTableData()
+  }
+
+
   var data = []
   for (var i = 0; i < 365; i++) {
     data.push({"color" : colors[Math.floor((Math.random() * 5))]})
+  }
+  return data
+}
+
+const EmptyTableData = () => {
+  var data = []
+  for (var i = 0; i < 365; i++) {
+    data.push({"color" : colors[0]})
   }
   return data
 }
@@ -74,7 +90,7 @@ export class TimeTable extends Component {
     return (
       <svg width="721" height="110" className="js-calendar-graph-svg">
         <g transform="translate(20, 20)">
-          <Table data={TableData()} todaysWeekday={6}/>
+          <Table data={TableData(this.props.records)} todaysWeekday={6}/>
           <Months/>
           <WeekDays/>
         </g>
@@ -83,4 +99,13 @@ export class TimeTable extends Component {
   }
 }
 
-export default TimeTable;
+function mapStateToProps({records}) {
+  return { records };
+}
+
+function mapActionsToProps (dispatch) {
+  return {
+  };
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(TimeTable);
