@@ -1,3 +1,14 @@
 body {
   background: rebeccapurple;
 }
+
+.wday {
+  font: 9px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  fill: #ccc;
+}
+
+.month {
+  fill: #aaa;
+  text-align: center;
+  font: 10px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
