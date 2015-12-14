@@ -25,19 +25,19 @@ const Table = (props) => {
     if (data[i]["selected"]) {
       cells.push(
         <rect className="day"
+              key={i}
               width="11" height="11"
               x={curCol*13} y={curRow*13}
               fill={data[i]["color"]}
-              id={"day"+i}
               stroke="#555"
               strokeWidth="1px"/>)
     } else {
       cells.push(
         <rect className="day"
+              key={i}
               width="11" height="11"
               x={curCol*13} y={curRow*13}
-              fill={data[i]["color"]}
-              id={"day"+i}/>)
+              fill={data[i]["color"]}/>)
     }
     curRow++
     if (curRow == 7) {
@@ -133,85 +133,6 @@ const emptyTableData = () => {
   return data
 }
 
-const selectBirthDayCells = (data) => {
-  data[355].selected = true
-  data[354].selected = true
-  data[353].selected = true
-  data[352].selected = true
-  data[351].selected = true
-  data[353-7].selected = true
-  data[355-14].selected = true
-  data[354-14].selected = true
-  data[353-14].selected = true
-  data[352-14].selected = true
-  data[351-14].selected = true
-
-  data[323].selected = true
-  data[323+1].selected = true
-  data[323+2].selected = true
-  data[323+3].selected = true
-  data[323+4-7].selected = true
-  data[323-14].selected = true
-  data[323+1-14].selected = true
-  data[323+2-14].selected = true
-  data[323+3-14].selected = true
-  data[323+2-7].selected = true
-
-  data[295].selected = true
-  data[295+1].selected = true
-  data[295+2].selected = true
-  data[295+3].selected = true
-  data[295+4].selected = true
-  data[295+2-14].selected = true
-  data[295+3-14].selected = true
-  data[295+4-14].selected = true
-  data[295+2-7].selected = true
-  data[295+4-7].selected = true
-
-  data[267].selected = true
-  data[267+1].selected = true
-  data[267+2].selected = true
-  data[267+3].selected = true
-  data[267+4].selected = true
-  data[267+2-14].selected = true
-  data[267+3-14].selected = true
-  data[267+4-14].selected = true
-  data[267+2-7].selected = true
-  data[267+4-7].selected = true
-
-  data[243].selected = true
-  data[243-21].selected = true
-  data[243-21-1].selected = true
-  data[243-14-2].selected = true
-  data[243-7-3].selected = true
-  data[243-4].selected = true
-  data[243-7-1].selected = true
-
-  data[33].selected = true
-  data[33-7].selected = true
-  data[33-14-1].selected = true
-  data[33-14-2].selected = true
-  data[33-14-3].selected = true
-  data[33-7-4].selected = true
-  data[33-4].selected = true
-  data[33-3].selected = true
-  data[33-2].selected = true
-  data[33-1].selected = true
-
-  data[68].selected = true
-  data[68-7].selected = true
-  data[68-14-1].selected = true
-  data[68-7-2].selected = true
-  data[68-14-3].selected = true
-  data[68-7-4].selected = true
-  data[68-4].selected = true
-  data[68-3].selected = true
-  data[68-2].selected = true
-  data[68-1].selected = true
-
-  return data
-}
-
 export class TimeTable extends Component {
   render() {
     return (
@@ -219,7 +140,7 @@ export class TimeTable extends Component {
         <g transform="translate(20, 20)">
           <Table
             data={tableData(this.props.records, this.props.selectedDays.selected)}
-            todaysWeekday={6}
+            todaysWeekday={((new Date()).getDay()+6)%7}
             originalProps={this.props}/>
           <Months/>
           <WeekDays/>
