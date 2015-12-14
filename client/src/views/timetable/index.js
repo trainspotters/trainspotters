@@ -82,15 +82,12 @@ const WeekDays = () =>
     <text textAnchor="middle" className="wday" dx="-10" dy="87">S</text>
   </g>
 
-const tableData = (records, selected) => {
-  console.log("selected:")
-  console.log(selected)
-
+const tableData = (records, selected, daysToShow) => {
   if (records.payload == undefined) {
-    return emptyTableData()
+    return emptyTableData(daysToShow, COLORS[0])
   }
 
-  return collectCounts(records.payload).map((count, num) => {
+  return collectCounts(records.payload, daysToShow).map((count, num) => {
     return {"color" : getColorByCount(count), "selected" : selected[num] == true}
   })
 }
@@ -112,27 +109,27 @@ const dateDiffInDays = (a, b) => {
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 }
 
-const collectCounts = (recordsPayload) => {
+const collectCounts = (recordsPayload, daysToShow) => {
   var diffToCount = {}
-  for (var i = 0; i < DAYS_TO_SHOW; i++) diffToCount[i] = 0
+  for (var i = 0; i < daysToShow; i++) diffToCount[i] = 0
 
   for (var i = 0; i < recordsPayload.length; i++) {
     var diff = dateDiffInDays(recordsPayload[i].startAt, new Date())
-    if (diff < DAYS_TO_SHOW) {
+    if (diff < daysToShow) {
       diffToCount[diff] = diffToCount[diff] + 1
     }
   }
   var res = []
-  for (var i = 0; i < DAYS_TO_SHOW; i++) {
+  for (var i = 0; i < daysToShow; i++) {
     res.push(diffToCount[i])
   }
   return res
 }
 
-const emptyTableData = () => {
+const emptyTableData = (daysToShow, defaultColor) => {
   var data = []
-  for (var i = 0; i < DAYS_TO_SHOW; i++) {
-    data.push({"color" : COLORS[0]})
+  for (var i = 0; i < daysToShow; i++) {
+    data.push({"color" : defaultColor})
   }
   return data
 }
@@ -146,7 +143,7 @@ export class TimeTable extends Component {
             daysToShow={DAYS_TO_SHOW}
             cellSize={CELL_SIZE}
             cellPadding={CELL_PADDING}
-            data={tableData(this.props.records, this.props.selectedDays.selected)}
+            data={tableData(this.props.records, this.props.selectedDays.selected, DAYS_TO_SHOW)}
             todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
             originalProps={this.props}/>
           <Months/>
