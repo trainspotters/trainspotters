@@ -3,33 +3,35 @@ import { connect } from 'react-redux';
 import { clickDay } from '../../actions/selectedDays.js';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"]
-const _MS_PER_DAY = 1000 * 60 * 60 * 24
-const _DAYS_TO_SHOW = 365
+const MS_PER_DAY = 1000 * 60 * 60 * 24
+const DAYS_TO_SHOW = 366
+const CELL_SIZE = 11
+const CELL_PADDING = 2
 
-// data = [_DAYS_TO_SHOW elements, 0 corresponds to today, 1 to yesterday,...]
-// data_element = {fill}
-// todays_weekday = [0, 7)
+// daysToShow how many days to show
+// data [daysToShow elements, 0 corresponds to today, 1 to yesterday,...]
+// each data element looks like {"fill": "#eeeeee", "selected": "true"}
+// todaysWeekday from 0 to 6 inclusive
 const Table = (props) => {
   console.log(props)
-  const { data, todaysWeekday, originalProps } = props;
+  const { daysToShow, cellSize, cellPadding, data, todaysWeekday, originalProps } = props;
   const clickDay = originalProps["clickDay"]
 
-  // day -> row             , col
-  // 0   -> todays_weekday  , ?
-  // 364 -> ?               , 0
-  // x   -> (todays_weekday-x)%7, ?
-  // 364 -> (todays_weekday-364)%7, 0
-  // 364 -> todays_weekday, 0
+  // day                   -> row                  , col
+  // 0                     -> todaysWeekday        , ?
+  // daysToShow-1          -> ?                    , 0
+  // x                     -> (todaysWeekday-x)%7 , ?
+  // daysToShow-1          -> (todaysWeekday-(daysToShow-1))%7, 0
   var cells = []
-  var curRow = todaysWeekday
+  var curRow = normalizeWeekday(todaysWeekday-(daysToShow-1))
   var curCol = 0
-  for (var i = _DAYS_TO_SHOW - 1; i >= 0; i--) {
+  for (var i = daysToShow - 1; i >= 0; i--) {
     if (data[i]["selected"]) {
       cells.push(
         <rect className="day"
               key={i}
-              width="11" height="11"
-              x={curCol*13} y={curRow*13}
+              width={cellSize} height={cellSize}
+              x={curCol*(cellSize+cellPadding)} y={curRow*(cellSize+cellPadding)}
               fill={data[i]["color"]}
               stroke="#555"
               strokeWidth="1px"/>)
@@ -37,8 +39,8 @@ const Table = (props) => {
       cells.push(
         <rect className="day"
               key={i}
-              width="11" height="11"
-              x={curCol*13} y={curRow*13}
+              width={cellSize} height={cellSize}
+              x={curCol*(cellSize+cellPadding)} y={curRow*(cellSize+cellPadding)}
               fill={data[i]["color"]}/>)
     }
     curRow++
@@ -50,6 +52,8 @@ const Table = (props) => {
 
   return <g>{cells}</g>
 }
+
+const normalizeWeekday = (day) => (day%7+7)%7
 
 const Months = () =>
   <g transform="translate(20, 0)">
@@ -110,16 +114,16 @@ const dateDiffInDays = (a, b) => {
 
 const collectCounts = (recordsPayload) => {
   var diffToCount = {}
-  for (var i = 0; i < _DAYS_TO_SHOW; i++) diffToCount[i] = 0
+  for (var i = 0; i < DAYS_TO_SHOW; i++) diffToCount[i] = 0
 
   for (var i = 0; i < recordsPayload.length; i++) {
     var diff = dateDiffInDays(recordsPayload[i].startAt, new Date())
-    if (diff < _DAYS_TO_SHOW) {
+    if (diff < DAYS_TO_SHOW) {
       diffToCount[diff] = diffToCount[diff] + 1
     }
   }
   var res = []
-  for (var i = 0; i < _DAYS_TO_SHOW; i++) {
+  for (var i = 0; i < DAYS_TO_SHOW; i++) {
     res.push(diffToCount[i])
   }
   return res
@@ -127,8 +131,8 @@ const collectCounts = (recordsPayload) => {
 
 const emptyTableData = () => {
   var data = []
-  for (var i = 0; i < _DAYS_TO_SHOW; i++) {
-    data.push({"color" : colors[0]})
+  for (var i = 0; i < DAYS_TO_SHOW; i++) {
+    data.push({"color" : COLORS[0]})
   }
   return data
 }
@@ -139,8 +143,11 @@ export class TimeTable extends Component {
       <svg width="721" height="110" className="js-calendar-graph-svg">
         <g transform="translate(20, 20)">
           <Table
+            daysToShow={DAYS_TO_SHOW}
+            cellSize={CELL_SIZE}
+            cellPadding={CELL_PADDING}
             data={tableData(this.props.records, this.props.selectedDays.selected)}
-            todaysWeekday={((new Date()).getDay()+6)%7}
+            todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
             originalProps={this.props}/>
           <Months/>
           <WeekDays/>
