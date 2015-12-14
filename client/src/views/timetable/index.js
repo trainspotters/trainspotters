@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clickDay } from '../../actions/selectedDays.js';
 
-const colors = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"]
+const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"]
+const _MS_PER_DAY = 1000 * 60 * 60 * 24
+const _DAYS_TO_SHOW = 365
 
-// data = [365 elements, 0 corresponds to today, 1 to yesterday,...]
+// data = [_DAYS_TO_SHOW elements, 0 corresponds to today, 1 to yesterday,...]
 // data_element = {fill}
 // todays_weekday = [0, 7)
 const Table = (props) => {
@@ -21,7 +23,7 @@ const Table = (props) => {
   var cells = []
   var curRow = todaysWeekday
   var curCol = 0
-  for (var i = 364; i >= 0; i--) {
+  for (var i = _DAYS_TO_SHOW - 1; i >= 0; i--) {
     if (data[i]["selected"]) {
       cells.push(
         <rect className="day"
@@ -90,14 +92,12 @@ const tableData = (records, selected) => {
 }
 
 const getColorByCount = (count) => {
-  if (count == 0) return colors[0]
-  if (count <= 2) return colors[1]
-  if (count <= 6) return colors[2]
-  if (count <= 8) return colors[3]
-  return colors[4]
+  if (count == 0) return COLORS[0]
+  if (count <= 2) return COLORS[1]
+  if (count <= 6) return COLORS[2]
+  if (count <= 8) return COLORS[3]
+  return COLORS[4]
 }
-
-const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 // a and b are javascript Date objects
 const dateDiffInDays = (a, b) => {
@@ -110,16 +110,16 @@ const dateDiffInDays = (a, b) => {
 
 const collectCounts = (recordsPayload) => {
   var diffToCount = {}
-  for (var i = 0; i < 365; i++) diffToCount[i] = 0
+  for (var i = 0; i < _DAYS_TO_SHOW; i++) diffToCount[i] = 0
 
   for (var i = 0; i < recordsPayload.length; i++) {
     var diff = dateDiffInDays(recordsPayload[i].startAt, new Date())
-    if (diff < 365) {
+    if (diff < _DAYS_TO_SHOW) {
       diffToCount[diff] = diffToCount[diff] + 1
     }
   }
   var res = []
-  for (var i = 0; i < 365; i++) {
+  for (var i = 0; i < _DAYS_TO_SHOW; i++) {
     res.push(diffToCount[i])
   }
   return res
@@ -127,7 +127,7 @@ const collectCounts = (recordsPayload) => {
 
 const emptyTableData = () => {
   var data = []
-  for (var i = 0; i < 365; i++) {
+  for (var i = 0; i < _DAYS_TO_SHOW; i++) {
     data.push({"color" : colors[0]})
   }
   return data
