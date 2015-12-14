@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { clickDay } from '../../actions/selectedDays.js';
 
 const colors = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"]
 
@@ -8,7 +9,8 @@ const colors = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"]
 // todays_weekday = [0, 7)
 const Table = (props) => {
   console.log(props)
-  const { data, todaysWeekday } = props;
+  const { data, todaysWeekday, originalProps } = props;
+  const clickDay = originalProps["clickDay"]
 
   // day -> row             , col
   // 0   -> todays_weekday  , ?
@@ -26,14 +28,16 @@ const Table = (props) => {
               width="11" height="11"
               x={curCol*13} y={curRow*13}
               fill={data[i]["color"]}
+              id={"day"+i}
               stroke="#555"
-              stroke-width="1px"/>)
+              strokeWidth="1px"/>)
     } else {
       cells.push(
         <rect className="day"
               width="11" height="11"
               x={curCol*13} y={curRow*13}
-              fill={data[i]["color"]}/>)
+              fill={data[i]["color"]}
+              id={"day"+i}/>)
     }
     curRow++
     if (curRow == 7) {
@@ -41,6 +45,7 @@ const Table = (props) => {
       curCol++
     }
   }
+
   return <g>{cells}</g>
 }
 
@@ -62,18 +67,18 @@ const Months = () =>
 
 const WeekDays = () =>
   <g>
-    <text text-anchor="middle" className="wday" dx="-10" dy="9">M</text>
-    <text text-anchor="middle" className="wday" dx="-10" dy="22" style={{'display' : 'none'}}>T</text>
-    <text text-anchor="middle" className="wday" dx="-10" dy="35">W</text>
-    <text text-anchor="middle" className="wday" dx="-10" dy="48" style={{'display' : 'none'}}>T</text>
-    <text text-anchor="middle" className="wday" dx="-10" dy="61">F</text>
-    <text text-anchor="middle" className="wday" dx="-10" dy="74" style={{'display' : 'none'}}>S</text>
-    <text text-anchor="middle" className="wday" dx="-10" dy="87">S</text>
+    <text textAnchor="middle" className="wday" dx="-10" dy="9">M</text>
+    <text textAnchor="middle" className="wday" dx="-10" dy="22" style={{'display' : 'none'}}>T</text>
+    <text textAnchor="middle" className="wday" dx="-10" dy="35">W</text>
+    <text textAnchor="middle" className="wday" dx="-10" dy="48" style={{'display' : 'none'}}>T</text>
+    <text textAnchor="middle" className="wday" dx="-10" dy="61">F</text>
+    <text textAnchor="middle" className="wday" dx="-10" dy="74" style={{'display' : 'none'}}>S</text>
+    <text textAnchor="middle" className="wday" dx="-10" dy="87">S</text>
   </g>
 
 const tableData = (records, selected) => {
-  console.log("records:")
-  console.log(records)
+  console.log("selected:")
+  console.log(selected)
 
   if (records.payload == undefined) {
     return emptyTableData()
@@ -128,12 +133,94 @@ const emptyTableData = () => {
   return data
 }
 
+const selectBirthDayCells = (data) => {
+  data[355].selected = true
+  data[354].selected = true
+  data[353].selected = true
+  data[352].selected = true
+  data[351].selected = true
+  data[353-7].selected = true
+  data[355-14].selected = true
+  data[354-14].selected = true
+  data[353-14].selected = true
+  data[352-14].selected = true
+  data[351-14].selected = true
+
+  data[323].selected = true
+  data[323+1].selected = true
+  data[323+2].selected = true
+  data[323+3].selected = true
+  data[323+4-7].selected = true
+  data[323-14].selected = true
+  data[323+1-14].selected = true
+  data[323+2-14].selected = true
+  data[323+3-14].selected = true
+  data[323+2-7].selected = true
+
+  data[295].selected = true
+  data[295+1].selected = true
+  data[295+2].selected = true
+  data[295+3].selected = true
+  data[295+4].selected = true
+  data[295+2-14].selected = true
+  data[295+3-14].selected = true
+  data[295+4-14].selected = true
+  data[295+2-7].selected = true
+  data[295+4-7].selected = true
+
+  data[267].selected = true
+  data[267+1].selected = true
+  data[267+2].selected = true
+  data[267+3].selected = true
+  data[267+4].selected = true
+  data[267+2-14].selected = true
+  data[267+3-14].selected = true
+  data[267+4-14].selected = true
+  data[267+2-7].selected = true
+  data[267+4-7].selected = true
+
+  data[243].selected = true
+  data[243-21].selected = true
+  data[243-21-1].selected = true
+  data[243-14-2].selected = true
+  data[243-7-3].selected = true
+  data[243-4].selected = true
+  data[243-7-1].selected = true
+
+  data[33].selected = true
+  data[33-7].selected = true
+  data[33-14-1].selected = true
+  data[33-14-2].selected = true
+  data[33-14-3].selected = true
+  data[33-7-4].selected = true
+  data[33-4].selected = true
+  data[33-3].selected = true
+  data[33-2].selected = true
+  data[33-1].selected = true
+
+  data[68].selected = true
+  data[68-7].selected = true
+  data[68-14-1].selected = true
+  data[68-7-2].selected = true
+  data[68-14-3].selected = true
+  data[68-7-4].selected = true
+  data[68-4].selected = true
+  data[68-3].selected = true
+  data[68-2].selected = true
+  data[68-1].selected = true
+
+  return data
+}
+
 export class TimeTable extends Component {
   render() {
     return (
       <svg width="721" height="110" className="js-calendar-graph-svg">
         <g transform="translate(20, 20)">
-          <Table data={tableData(this.props.records, {0: true, 3: true, 364: true})} todaysWeekday={6}/>
+          <Table
+            data={tableData(this.props.records, this.props.selectedDays.selected)}
+            todaysWeekday={6}
+            originalProps={this.props}/>
           <Months/>
           <WeekDays/>
         </g>
@@ -142,12 +229,13 @@ export class TimeTable extends Component {
   }
 }
 
-function mapStateToProps({records}) {
-  return { records };
+function mapStateToProps({records, selectedDays}) {
+  return { records, selectedDays };
 }
 
 function mapActionsToProps (dispatch) {
   return {
+    clickDay: (day) => dispatch(clickDay(day)),
   };
 }
 
