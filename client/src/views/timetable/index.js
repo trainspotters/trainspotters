@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clickDay } from '../../actions/selectedDays.js';
-import _ from 'lodash';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"];
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -57,8 +56,6 @@ const Table = (props) => {
     <g>{cells}</g>
   );
 }
-
-const normalizeWeekday = (day) => (day%7+7)%7
 
 const Months = () => (
   <g transform="translate(20, 0)">
@@ -138,6 +135,8 @@ const collectCounts = (recordsPayload, daysToShow) => {
   }
   return res;
 }
+
+const normalizeWeekday = (day) => (day%7+7)%7
 
 const TimeTable = (props) =>
   (<svg width="721" height="110" className="js-calendar-graph-svg">
