@@ -12,7 +12,7 @@ var RECORD_TYPES = {
   undergroundJourney: 'UNDERGROUND_JOURNEY',
 };
 
-var STATION = "[-\\w\\(\\)\\ \\,\\[\\]\\/\\']+";
+var STATION = "[-\\w\\(\\)\\ \\,\\[\\]\\/\\'\\&]+";
 var TYPE_PARSERS = [
   {
     type: RECORD_TYPES.undergroundJourney,
