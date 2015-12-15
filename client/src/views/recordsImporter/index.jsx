@@ -15,7 +15,6 @@ export class RecordsImporter extends Component {
       <button onClick={() => { parseRecords(this.input.value) }}>Parse</button>
       { parsing ? <div>Parsing...</div> : ''}
       { this.renderError() }
-      { this.renderRecords() }
     </div>);
   }
   renderError() {
