@@ -25,27 +25,19 @@ const Table = (props) => {
   const cells = [];
   var curRow = normalizeWeekday(todaysWeekday-(daysToShow-1));
   var curCol = 0;
-  for (var _i = daysToShow - 1; _i >= 0; _i--) {
-    const i = _i;
-    if (data[i]["selected"]) {
-      cells.push(
-        <rect className="day"
-              key={i}
-              width={cellSize} height={cellSize}
-              x={curCol*(cellSize+cellPadding)} y={curRow*(cellSize+cellPadding)}
-              fill={data[i]["color"]}
-              stroke="#555"
-              strokeWidth="1px"
-              onClick={() => { clickDay(i) }}/>);
-    } else {
-      cells.push(
-        <rect className="day"
-              key={i}
-              width={cellSize} height={cellSize}
-              x={curCol*(cellSize+cellPadding)} y={curRow*(cellSize+cellPadding)}
-              fill={data[i]["color"]}
-              onClick={() => { clickDay(i) }}/>);
-    }
+  for (var i = daysToShow - 1; i >= 0; i--) {
+    const selectedProps = data[i]["selected"] ? {
+      "stroke": "#555",
+      "strokeWidth": "1px"
+    } : {};
+    const currentDay = i;
+    cells.push(<rect className="day"
+          key={i}
+          width={cellSize} height={cellSize}
+          x={curCol*(cellSize+cellPadding)} y={curRow*(cellSize+cellPadding)}
+          fill={data[i]["color"]}
+          {...selectedProps}
+          onClick={() => { clickDay(currentDay) }}/>);
     curRow++;
     if (curRow == 7) {
       curRow = 0;
