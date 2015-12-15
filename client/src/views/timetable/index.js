@@ -25,7 +25,8 @@ const Table = (props) => {
   const cells = [];
   var curRow = normalizeWeekday(todaysWeekday-(daysToShow-1));
   var curCol = 0;
-  for (const i = daysToShow - 1; i >= 0; i--) {
+  for (var _i = daysToShow - 1; _i >= 0; _i--) {
+    const i = _i;
     if (data[i]["selected"]) {
       cells.push(
         <rect className="day"
@@ -113,7 +114,7 @@ const getColorByCount = (count) => {
 const collectCounts = (recordsPayload, daysToShow) => {
   const counts = repeat(0, daysToShow);
   const now = new Date();
-  for (const i = 0; i < recordsPayload.length; i++) {
+  for (const i in recordsPayload) {
     const diff = dateDiffInDays(recordsPayload[i].startAt, now);
     if (diff < daysToShow) {
       counts[diff] = counts[diff] + 1;
