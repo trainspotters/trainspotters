@@ -89,11 +89,14 @@ const WeekDays = () => (
 )
 
 const tableData = (records, selected, daysToShow) => {
-  if (records.payload == undefined) {
-    return emptyTableData(daysToShow, COLORS[0]);
+  var data;
+  if (records.payload != undefined) {
+    data = collectCounts(records.payload, daysToShow);
+  } else {
+    data = emptyTableData(daysToShow, COLORS[0]);
   }
 
-  return collectCounts(records.payload, daysToShow).map((count, num) => {
+  return data.map((count, num) => {
     return {"color" : getColorByCount(count), "selected" : selected[num] == true};
   })
 }
@@ -135,7 +138,7 @@ const collectCounts = (recordsPayload, daysToShow) => {
 const emptyTableData = (daysToShow, defaultColor) => {
   var data = [];
   for (var i = 0; i < daysToShow; i++) {
-    data.push({"color" : defaultColor});
+    data.push(0);
   }
   return data;
 }
