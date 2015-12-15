@@ -22,11 +22,10 @@ const Table = (props) => {
   // daysToShow-1          -> ?                    , 0
   // x                     -> (todaysWeekday-x)%7 , ?
   // daysToShow-1          -> (todaysWeekday-(daysToShow-1))%7, 0
-  var cells = [];
+  const cells = [];
   var curRow = normalizeWeekday(todaysWeekday-(daysToShow-1));
   var curCol = 0;
-  for (var i = daysToShow - 1; i >= 0; i--) {
-    const currentDay = i;
+  for (const i = daysToShow - 1; i >= 0; i--) {
     if (data[i]["selected"]) {
       cells.push(
         <rect className="day"
@@ -36,7 +35,7 @@ const Table = (props) => {
               fill={data[i]["color"]}
               stroke="#555"
               strokeWidth="1px"
-              onClick={() => { clickDay(currentDay) }}/>);
+              onClick={() => { clickDay(i) }}/>);
     } else {
       cells.push(
         <rect className="day"
@@ -44,7 +43,7 @@ const Table = (props) => {
               width={cellSize} height={cellSize}
               x={curCol*(cellSize+cellPadding)} y={curRow*(cellSize+cellPadding)}
               fill={data[i]["color"]}
-              onClick={() => { clickDay(currentDay) }}/>);
+              onClick={() => { clickDay(i) }}/>);
     }
     curRow++;
     if (curRow == 7) {
@@ -112,10 +111,10 @@ const getColorByCount = (count) => {
 }
 
 const collectCounts = (recordsPayload, daysToShow) => {
-  var counts = repeat(0, daysToShow);
-  var now = new Date();
-  for (var i = 0; i < recordsPayload.length; i++) {
-    var diff = dateDiffInDays(recordsPayload[i].startAt, now);
+  const counts = repeat(0, daysToShow);
+  const now = new Date();
+  for (const i = 0; i < recordsPayload.length; i++) {
+    const diff = dateDiffInDays(recordsPayload[i].startAt, now);
     if (diff < daysToShow) {
       counts[diff] = counts[diff] + 1;
     }
