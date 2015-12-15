@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clickDay } from '../../actions/selectedDays.js';
+import _ from 'lodash';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"];
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -93,11 +94,14 @@ const tableData = (records, selected, daysToShow) => {
   if (records.payload != undefined) {
     data = collectCounts(records.payload, daysToShow);
   } else {
-    data = emptyTableData(daysToShow, COLORS[0]);
+    data = Array.from(new Array(daysToShow), () => 0)
   }
 
   return data.map((count, num) => {
-    return {"color" : getColorByCount(count), "selected" : selected[num] == true};
+    return {
+      "color" : getColorByCount(count),
+      "selected" : selected[num] == true
+    };
   })
 }
 
@@ -135,33 +139,20 @@ const collectCounts = (recordsPayload, daysToShow) => {
   return res;
 }
 
-const emptyTableData = (daysToShow, defaultColor) => {
-  var data = [];
-  for (var i = 0; i < daysToShow; i++) {
-    data.push(0);
-  }
-  return data;
-}
-
-export class TimeTable extends Component {
-  render() {
-    return (
-      <svg width="721" height="110" className="js-calendar-graph-svg">
-        <g transform="translate(20, 20)">
-          <Table
-            daysToShow={DAYS_TO_SHOW}
-            cellSize={CELL_SIZE}
-            cellPadding={CELL_PADDING}
-            data={tableData(this.props.records, this.props.selectedDays.selected, DAYS_TO_SHOW)}
-            todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
-            originalProps={this.props}/>
-          <Months/>
-          <WeekDays/>
-        </g>
-      </svg>
-    );
-  }
-}
+const TimeTable = (props) =>
+  (<svg width="721" height="110" className="js-calendar-graph-svg">
+    <g transform="translate(20, 20)">
+      <Table
+        daysToShow={DAYS_TO_SHOW}
+        cellSize={CELL_SIZE}
+        cellPadding={CELL_PADDING}
+        data={tableData(props.records, props.selectedDays.selected, DAYS_TO_SHOW)}
+        todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
+        originalProps={props}/>
+      <Months/>
+      <WeekDays/>
+    </g>
+  </svg>)
 
 function mapStateToProps({records, selectedDays}) {
   return { records, selectedDays };
