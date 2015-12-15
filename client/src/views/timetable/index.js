@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clickDay } from '../../actions/selectedDays.js';
 import { repeat, normalizeWeekday, dateDiffInDays } from '../../utils.js';
+import RecordList from '../../components/recordList';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"];
 const DAYS_TO_SHOW = 366;
@@ -111,23 +112,38 @@ const collectCounts = (recordsPayload, daysToShow) => {
       counts[diff] = counts[diff] + 1;
     }
   }
+  selectedJourneys()
   return counts;
 }
 
+const selectedJourneys = (records, selected) => {
+  if (!records || !records.payload) {
+    return [];
+  }
+  const now = new Date();
+  return records.payload.filter((journey) => {
+    const diff = dateDiffInDays(journey.startAt, now);
+    return selected[diff];
+  });
+}
+
 const TimeTable = (props) =>
-  (<svg width="721" height="110" className="js-calendar-graph-svg">
-    <g transform="translate(20, 20)">
-      <Table
-        daysToShow={DAYS_TO_SHOW}
-        cellSize={CELL_SIZE}
-        cellPadding={CELL_PADDING}
-        data={tableData(props.records, props.selectedDays.selected, DAYS_TO_SHOW)}
-        todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
-        originalProps={props}/>
-      <Months/>
-      <WeekDays/>
-    </g>
-  </svg>)
+  (<div>
+    <svg width="721" height="110" className="js-calendar-graph-svg">
+      <g transform="translate(20, 20)">
+        <Table
+          daysToShow={DAYS_TO_SHOW}
+          cellSize={CELL_SIZE}
+          cellPadding={CELL_PADDING}
+          data={tableData(props.records, props.selectedDays.selected, DAYS_TO_SHOW)}
+          todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
+          originalProps={props}/>
+        <Months/>
+        <WeekDays/>
+      </g>
+    </svg>
+    <RecordList records={selectedJourneys(props.records, props.selectedDays.selected)}/>
+  </div>)
 
 function mapStateToProps({records, selectedDays}) {
   return { records, selectedDays };
