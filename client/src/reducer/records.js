@@ -1,3 +1,4 @@
+'use strict';
 import {
   RECORDS_PARSING_START,
   RECORDS_PARSING_SUCCESS,

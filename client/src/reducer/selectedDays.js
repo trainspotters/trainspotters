@@ -1,3 +1,4 @@
+'use strict';
 import {
   DAY_CLICKED,
 } from '../actions/selectedDays';

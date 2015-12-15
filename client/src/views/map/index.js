@@ -1,3 +1,4 @@
+'use strict';
 import React, { Component } from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import stations from '../../../../stations.json';

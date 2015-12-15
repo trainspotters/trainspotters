@@ -1,3 +1,4 @@
+'use strict';
 import { getRawFromString, parseRecord } from 'trainspotters-parser';
 
 export const RECORDS_PARSING_START = 'RECORDS_PARSING_START';
