@@ -6,7 +6,7 @@ const initialState = {
   selected: {},
 };
 
-export default function records(state = initialState, {type, payload}) {
+export default function selectedDays(state = initialState, {type, payload}) {
   switch (type) {
     case DAY_CLICKED:
       if (state.selected[payload] == true) {
@@ -14,7 +14,9 @@ export default function records(state = initialState, {type, payload}) {
       } else {
         state.selected[payload] = true
       }
-      return state;
+      return {
+        selected: state.selected
+      };
     default:
       return state;
   }

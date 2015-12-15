@@ -12,9 +12,9 @@ const App = () => {
   return (<div>
     <Provider store={store}>
       <div>
-        <TimeTable></TimeTable>
-        <RecordsImporter></RecordsImporter>
-        <MapStations></MapStations>
+        <RecordsImporter/>
+        <TimeTable/>
+        <MapStations/>
       </div>
     </Provider>
   </div>)
