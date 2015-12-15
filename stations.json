@@ -1292,7 +1292,9 @@
     "lat": 51.53057,
     "lng": -0.12399,
     "names": [
-      "King's Cross St.Pancras"
+      "King's Cross St.Pancras",
+      "Kings Cross",
+      "St Pancras International"
     ]
   },
   {
@@ -1973,7 +1975,8 @@
     "lat": 51.50474,
     "lng": -0.21881,
     "names": [
-      "Shepherd's Bush"
+      "Shepherd's Bush",
+      "Shepherd's Bush (Central line)"
     ]
   },
   {
@@ -2165,7 +2168,8 @@
     "lat": 51.541208,
     "lng": -0.003776,
     "names": [
-      "Stratford"
+      "Stratford",
+      "Stratford International"
     ]
   },
   {
@@ -2397,7 +2401,8 @@
     "lat": 51.50322,
     "lng": -0.11328,
     "names": [
-      "Waterloo"
+      "Waterloo",
+      "Waterloo (Jubilee line entrance)"
     ]
   },
   {

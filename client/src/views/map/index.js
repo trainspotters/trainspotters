@@ -6,6 +6,17 @@ import { connect } from 'react-redux';
 import stations from '../../../../stations.json';
 
 export class MapStations extends Component {
+
+  getGeo(name) {
+    for(const i in stations) {
+      if(stations[i].names.indexOf(name) > -1) {
+        return {lat: stations[i].lat, lng: stations[i].lng}
+      }
+    }
+    console.log(name);
+    return {};
+  }
+
   render() {
     const { records } = this.props;
     const position = [51.505, -0.09];
@@ -13,16 +24,14 @@ export class MapStations extends Component {
 
     if(records.payload) {
       const newrecords = records.payload.map((record) => {
-        for(const i in stations) {
-          if(stations[i].names.indexOf(record.from) > -1) {
-              record.from_lat = stations[i].lat;
-              record.from_lng = stations[i].lng;
-          }
-          if(stations[i].names.indexOf(record.to) > -1) {
-              record.to_lat = stations[i].lat;
-              record.to_lng = stations[i].lng;
-          }
-        }
+        const to = this.getGeo(record.to);
+        record.to_lat = to.lat;
+        record.to_lng = to.lng;
+
+        const from = this.getGeo(record.from);
+        record.from_lat = from.lat;
+        record.from_lng = from.lng;
+
         return record;
       });
 

@@ -19,8 +19,8 @@ var TYPE_PARSERS = [
     regexp: new RegExp(`(${STATION}) to (${STATION})`),
     extract: function(match) {
       return {
-        from: match[1],
-        to: match[2] === '[No touch-out]' ? undefined : match[2],
+        from: cleanStationName(match[1]),
+        to: match[2] === '[No touch-out]' ? undefined : cleanStationName(match[2]),
       };
     }
   },
@@ -43,6 +43,10 @@ var TYPE_PARSERS = [
     }
   },
 ];
+
+function cleanStationName(station) {
+  return station.replace(/DLR|\[London Underground.*|\[London Overground.*|\[HS1\]|\[National Rail\]/g, '').trim();
+}
 
 function parseDescription(description) {
   return TYPE_PARSERS.reduce(function(parsed, parser){
