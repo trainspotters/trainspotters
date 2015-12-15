@@ -22,22 +22,21 @@ const Table = (props) => {
   // daysToShow-1          -> ?                    , 0
   // x                     -> (todaysWeekday-x)%7 , ?
   // daysToShow-1          -> (todaysWeekday-(daysToShow-1))%7, 0
-  const cells = [];
-  var curRow = normalizeWeekday(todaysWeekday-(daysToShow-1));
-  var curCol = 0;
-  for (var i = daysToShow - 1; i >= 0; i--) {
+  let cells = [];
+  let curRow = normalizeWeekday(todaysWeekday-(daysToShow-1));
+  let curCol = 0;
+  for (let i = daysToShow - 1; i >= 0; i--) {
     const selectedProps = data[i]["selected"] ? {
       "stroke": "#555",
       "strokeWidth": "1px"
     } : {};
-    const currentDay = i;
     cells.push(<rect className="day"
           key={i}
           width={cellSize} height={cellSize}
           x={curCol*(cellSize+cellPadding)} y={curRow*(cellSize+cellPadding)}
           fill={data[i]["color"]}
           {...selectedProps}
-          onClick={() => { clickDay(currentDay) }}/>);
+          onClick={() => { clickDay(i) }}/>);
     curRow++;
     if (curRow == 7) {
       curRow = 0;
@@ -80,7 +79,7 @@ const WeekDays = () => (
 )
 
 const tableData = (records, selected, daysToShow) => {
-  var data;
+  let data;
   if (records.payload != undefined) {
     data = collectCounts(records.payload, daysToShow);
   } else {
