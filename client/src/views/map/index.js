@@ -9,6 +9,7 @@ export class MapStations extends Component {
   render() {
     const { records } = this.props;
     const position = [51.505, -0.09];
+    let markers;
 
     if(records.payload) {
       const newrecords = records.payload.map((record) => {
@@ -25,7 +26,7 @@ export class MapStations extends Component {
         return record;
       });
 
-      const markers = newrecords.map((station) => {
+      markers = newrecords.map((station) => {
         if(station.from_lat && station.from_lng && station.to_lat && station.to_lng) {
           return (
             <Polyline positions={[[station.from_lat, station.from_lng],[station.to_lat, station.to_lng]]} key={station.startAt}/>
