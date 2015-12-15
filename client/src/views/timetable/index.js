@@ -91,7 +91,7 @@ const tableData = (records, selected, daysToShow) => {
   if (records.payload != undefined) {
     data = collectCounts(records.payload, daysToShow);
   } else {
-    data = Array.from(new Array(daysToShow), () => 0)
+    data = repeat(0, daysToShow)
   }
 
   return data.map((count, num) => {
@@ -120,23 +120,20 @@ const dateDiffInDays = (a, b) => {
 }
 
 const collectCounts = (recordsPayload, daysToShow) => {
-  var diffToCount = {};
-  for (var i = 0; i < daysToShow; i++) diffToCount[i] = 0;
-
+  var counts = repeat(0, daysToShow);
+  var now = new Date();
   for (var i = 0; i < recordsPayload.length; i++) {
-    var diff = dateDiffInDays(recordsPayload[i].startAt, new Date());
+    var diff = dateDiffInDays(recordsPayload[i].startAt, now);
     if (diff < daysToShow) {
-      diffToCount[diff] = diffToCount[diff] + 1;
+      counts[diff] = counts[diff] + 1;
     }
   }
-  var res = []
-  for (var i = 0; i < daysToShow; i++) {
-    res.push(diffToCount[i]);
-  }
-  return res;
+  return counts;
 }
 
-const normalizeWeekday = (day) => (day%7+7)%7
+const normalizeWeekday = (day) => (day % 7 + 7) % 7;
+
+const repeat = (element, count) => Array.from(new Array(count), () => element);
 
 const TimeTable = (props) =>
   (<svg width="721" height="110" className="js-calendar-graph-svg">
