@@ -1,9 +1,11 @@
+'use strict';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clickDay } from '../../actions/selectedDays.js';
+import { repeat, normalizeWeekday, dateDiffInDays } from '../../utils.js';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"];
-const MS_PER_DAY = 1000 * 60 * 60 * 24;
 const DAYS_TO_SHOW = 366;
 const CELL_SIZE = 11;
 const CELL_PADDING = 2;
@@ -110,15 +112,6 @@ const getColorByCount = (count) => {
   return COLORS[4];
 }
 
-// a and b are javascript Date objects
-const dateDiffInDays = (a, b) => {
-  // Discard the time and time-zone information.
-  var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-  var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
-  return Math.floor((utc2 - utc1) / MS_PER_DAY);
-}
-
 const collectCounts = (recordsPayload, daysToShow) => {
   var counts = repeat(0, daysToShow);
   var now = new Date();
@@ -130,10 +123,6 @@ const collectCounts = (recordsPayload, daysToShow) => {
   }
   return counts;
 }
-
-const normalizeWeekday = (day) => (day % 7 + 7) % 7;
-
-const repeat = (element, count) => Array.from(new Array(count), () => element);
 
 const TimeTable = (props) =>
   (<svg width="721" height="110" className="js-calendar-graph-svg">
