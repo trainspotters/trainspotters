@@ -3,10 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { parseRecords } from '../../actions/records';
-import RecordList from '../../components/recordList';
 
-
-export class RecordsImporter extends Component {
+class RecordsImporter extends Component {
   render() {
     const { records, parseRecords } = this.props;
     const { parsing } = records;
@@ -22,11 +20,6 @@ export class RecordsImporter extends Component {
     const { records } = this.props;
     const { error, payload } = records;
     if (error) return <pre>{payload}</pre>;
-  }
-  renderRecords() {
-    const { records } = this.props;
-    const { error, payload } = records;
-    if (!error && payload) return <RecordList records={ payload }></RecordList>;
   }
 }
 
