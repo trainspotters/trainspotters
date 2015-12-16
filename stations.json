@@ -724,7 +724,8 @@
     "lat": 51.520195,
     "lng": -0.166986,
     "names": [
-      "Edgware Road (Circle Line)"
+      "Edgware Road (Circle Line)",
+      "Edgware Road (District, Circle, H&C lines)"
     ]
   },
   {
@@ -972,7 +973,8 @@
     "lat": 51.492328,
     "lng": -0.222825,
     "names": [
-      "Hammersmith (Dist&Picc Line)"
+      "Hammersmith (Dist&Picc Line)",
+      "Hammersmith (District, Piccadilly lines)"
     ]
   },
   {
@@ -1052,7 +1054,8 @@
     "lat": 51.4712899,
     "lng": -0.4527438,
     "names": [
-      "Heathrow Terminals 1-2-3"
+      "Heathrow Terminals 1-2-3",
+      "Heathrow Terminals 123"
     ]
   },
   {
@@ -1703,7 +1706,8 @@
     "lat": 51.519096707,
     "lng": -0.176968859,
     "names": [
-      "Paddington (H&C Line)"
+      "Paddington (H&C Line)",
+      "Paddington (Bakerloo, Circle/District and H&C)"
     ]
   },
   {
