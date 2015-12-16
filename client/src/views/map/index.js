@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Map, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
 import { connect } from 'react-redux';
 import stations from '../../../../stations.json';
+import { recordTypes } from 'trainspotters-parser';
 
 export class MapStations extends Component {
 
@@ -23,17 +24,19 @@ export class MapStations extends Component {
     let markers;
 
     if(records.payload) {
-      const newrecords = records.payload.map((record) => {
-        const to = this.getGeo(record.to);
-        record.to_lat = to.lat;
-        record.to_lng = to.lng;
+      const newrecords = records.payload
+        .filter((record) => record.type === recordTypes.undergroundJourney)
+        .map((record) => {
+          const to = this.getGeo(record.to);
+          record.to_lat = to.lat;
+          record.to_lng = to.lng;
 
-        const from = this.getGeo(record.from);
-        record.from_lat = from.lat;
-        record.from_lng = from.lng;
+          const from = this.getGeo(record.from);
+          record.from_lat = from.lat;
+          record.from_lng = from.lng;
 
-        return record;
-      });
+          return record;
+        });
 
       markers = newrecords.map((station) => {
         if(station.from_lat && station.from_lng && station.to_lat && station.to_lng) {
