@@ -128,14 +128,17 @@ const PerDayTable = ({records, selectedDays, clickDay, colorFunction}) =>
     </g>
   </svg>)
 
-const WhiteColorFunction = (journeys) => "#eeeeee";
-const JourneyPerDayColorFunction = (journeys) => {
+const whiteColorFunction = (journeys) => "#eeeeee";
+const journeysPerDayColorFunction = (journeys) => {
   const count = journeys.length;
   if (count == 0) return COLORS[0];
   if (count <= 2) return COLORS[1];
   if (count <= 6) return COLORS[2];
   if (count <= 8) return COLORS[3];
   return COLORS[4];
+}
+const journeysTimePerDayColorFunction = (journeys) => {
+  return whiteColorFunction(journeys);
 }
 
 const JourneysTables = ({records, selectedDays, clickDay}) =>
@@ -144,7 +147,12 @@ const JourneysTables = ({records, selectedDays, clickDay}) =>
       records={records}
       selectedDays={selectedDays}
       clickDay={clickDay}
-      colorFunction={JourneyPerDayColorFunction}/>
+      colorFunction={journeysPerDayColorFunction}/>
+    <PerDayTable
+      records={records}
+      selectedDays={selectedDays}
+      clickDay={clickDay}
+      colorFunction={journeysTimePerDayColorFunction}/>
     <RecordList
       records={selectedJourneys(records, selectedDays)}/>
   </div>)
