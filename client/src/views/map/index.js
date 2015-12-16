@@ -1,23 +1,12 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { Map, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
+import { Map, Polyline, TileLayer } from 'react-leaflet';
 import { connect } from 'react-redux';
-import stations from '../../../../stations.json';
+import { getCoordinateByName } from '../../utils';
 import { recordTypes } from 'trainspotters-parser';
 
 export class MapStations extends Component {
-
-  getGeo(name) {
-    for(const i in stations) {
-      if(stations[i].names.indexOf(name) > -1) {
-        return {lat: stations[i].lat, lng: stations[i].lng}
-      }
-    }
-    console.log(name);
-    return {};
-  }
-
   render() {
     const { records } = this.props;
     const position = [51.505, -0.09];
@@ -27,15 +16,16 @@ export class MapStations extends Component {
       const newrecords = records.payload
         .filter((record) => record.type === recordTypes.undergroundJourney)
         .map((record) => {
-          const to = this.getGeo(record.to);
-          record.to_lat = to.lat;
-          record.to_lng = to.lng;
+          const to = getCoordinateByName(record.to) || {};
+          const from = getCoordinateByName(record.from) || {};
 
-          const from = this.getGeo(record.from);
-          record.from_lat = from.lat;
-          record.from_lng = from.lng;
-
-          return record;
+          return {
+            to_lat: to.lat,
+            to_lng: to.lng,
+            from_lat: from.lat,
+            from_lng: from.lng,
+            ...record
+          };
         });
 
       markers = newrecords.map((station) => {

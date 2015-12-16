@@ -31,6 +31,7 @@
     "redux": "^3.0.4",
     "redux-thunk": "^1.0.0",
     "trainspotters-parser": "file:../parser",
+    "underscore": "^1.8.3",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
