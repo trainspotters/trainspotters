@@ -7,13 +7,15 @@ import store from './store';
 
 import RecordsImporter from './views/recordsImporter';
 import MapStations from './views/map';
-import JourneysTables from './views/timetable'
+import JourneysTables from './views/timetable';
+import AllJourneysStat from './views/allJourneysStat.jsx'
 
 const App = () => {
   return (<div>
     <Provider store={store}>
       <div>
         <RecordsImporter/>
+        <AllJourneysStat/>
         <JourneysTables/>
         <MapStations/>
       </div>
