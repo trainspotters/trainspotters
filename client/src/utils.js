@@ -1,5 +1,4 @@
 'use strict';
-import _ from 'underscore';
 import stations from '../../stations.json';
 
 export const MS_PER_HOUR = 1000 * 60 * 60;
@@ -16,5 +15,5 @@ export const dateDiffInDays = (a, b) => {
 }
 
 export const getCoordinateByName = (name) => {
-  return _.find(stations, ({names}) => { return names.indexOf(name) > -1; });
+  return stations.find(({names}) => { return names.indexOf(name) > -1; });
 }
