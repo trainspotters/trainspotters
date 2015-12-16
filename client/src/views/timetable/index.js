@@ -87,7 +87,7 @@ const tableData = (records, selected, daysToShow) => {
   return data.map((count, num) => {
     return {
       "color" : getColorByCount(count),
-      "selected" : selected[num] == true
+      "selected" : selected.has(num)
     };
   })
 }
