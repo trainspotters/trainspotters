@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clickDay } from '../../actions/selectedDays.js';
-import { repeat, normalizeWeekday, dateDiffInDays } from '../../utils.js';
+import { normalizeWeekday, dateDiffInDays } from '../../utils.js';
 import RecordList from '../../components/recordList';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"];
@@ -76,41 +76,30 @@ const WeekDays = () => (
   </g>
 )
 
-const tableData = (records, selected, daysToShow) => {
-  let data;
-  if (records.payload != undefined) {
-    data = collectCounts(records.payload, daysToShow);
-  } else {
-    data = repeat(0, daysToShow)
-  }
+const tableData = (records, selected, daysToShow, colorFunction) => {
+  const groupedJourneys =
+    groupJourneys(records.payload != undefined ? records.payload : [], daysToShow);
 
-  return data.map((count, num) => {
+  console.log(groupedJourneys);
+
+  return groupedJourneys.map((journeys, num) => {
     return {
-      "color" : getColorByCount(count),
+      "color" : colorFunction(journeys),
       "selected" : selected.has(num)
     };
   })
 }
 
-const getColorByCount = (count) => {
-  if (count == 0) return COLORS[0];
-  if (count <= 2) return COLORS[1];
-  if (count <= 6) return COLORS[2];
-  if (count <= 8) return COLORS[3];
-  return COLORS[4];
-}
-
-const collectCounts = (recordsPayload, daysToShow) => {
-  const counts = repeat(0, daysToShow);
+const groupJourneys = (recordsPayload, daysToShow) => {
+  const journeys = Array.from(new Array(daysToShow), () => []);
   const now = new Date();
   for (const i in recordsPayload) {
     const diff = dateDiffInDays(recordsPayload[i].startAt, now);
     if (diff < daysToShow) {
-      counts[diff] = counts[diff] + 1;
+      journeys[diff].push(recordsPayload[i]);
     }
   }
-  selectedJourneys()
-  return counts;
+  return journeys;
 }
 
 const selectedJourneys = (records, selected) => {
@@ -124,14 +113,14 @@ const selectedJourneys = (records, selected) => {
   });
 }
 
-const JourneysPerDayTable = ({records, selectedDays, clickDay}) =>
+const PerDayTable = ({records, selectedDays, clickDay, colorFunction}) =>
   (<svg width="721" height="110" className="js-calendar-graph-svg">
     <g transform="translate(20, 20)">
       <Table
         daysToShow={DAYS_TO_SHOW}
         cellSize={CELL_SIZE}
         cellPadding={CELL_PADDING}
-        data={tableData(records, selectedDays, DAYS_TO_SHOW)}
+        data={tableData(records, selectedDays, DAYS_TO_SHOW, colorFunction)}
         todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
         clickDay={clickDay}/>
       <Months/>
@@ -139,12 +128,23 @@ const JourneysPerDayTable = ({records, selectedDays, clickDay}) =>
     </g>
   </svg>)
 
+const WhiteColorFunction = (journeys) => "#eeeeee";
+const JourneyPerDayColorFunction = (journeys) => {
+  const count = journeys.length;
+  if (count == 0) return COLORS[0];
+  if (count <= 2) return COLORS[1];
+  if (count <= 6) return COLORS[2];
+  if (count <= 8) return COLORS[3];
+  return COLORS[4];
+}
+
 const JourneysTables = ({records, selectedDays, clickDay}) =>
   (<div>
-    <JourneysPerDayTable
+    <PerDayTable
       records={records}
       selectedDays={selectedDays}
-      clickDay={clickDay}/>
+      clickDay={clickDay}
+      colorFunction={JourneyPerDayColorFunction}/>
     <RecordList
       records={selectedJourneys(records, selectedDays)}/>
   </div>)

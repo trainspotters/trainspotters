@@ -6,8 +6,6 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 export const normalizeWeekday = (day) => (day % 7 + 7) % 7;
 
-export const repeat = (element, count) => Array.from(new Array(count), () => element);
-
 // a and b are javascript Date objects
 export const dateDiffInDays = (a, b) => {
   // Discard the time and time-zone information.
