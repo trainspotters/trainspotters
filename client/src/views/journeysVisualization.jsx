@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { JourneysStat } from '../components/journeysStat.jsx';
 
-import MapStations from './map';
+import { MapStations } from '../components/mapStations.js';
 import { PerDayTable, journeysPerDayColorFunction, journeysTimePerDayColorFunction }
   from '../components/perDaysTable.jsx';
 import RecordList from '../components/recordList.jsx';
@@ -25,7 +25,8 @@ const JourneysVisualization = ({journeys, selectedDays, clickDay}) =>
       colorFunction={journeysTimePerDayColorFunction}/>
       <RecordList
         records={selectedJourneys(journeys, selectedDays)}/>
-      <MapStations/>
+      <MapStations
+        journeys={journeys}/>
   </div>
 
 function mapStateToProps({records, selectedDays}) {
