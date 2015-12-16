@@ -5,15 +5,15 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
-import RecordsImporter from './views/recordsImporter';
-import JourneysVisualization from './views/journeysVisualization.jsx'
+import RecordsImporter from './views/recordsImporter.jsx';
+import RecordsVisualization from './views/recordsVisualization.jsx'
 
 const App = () => {
   return (<div>
     <Provider store={store}>
       <div>
         <RecordsImporter/>
-        <JourneysVisualization/>
+        <RecordsVisualization/>
       </div>
     </Provider>
   </div>)

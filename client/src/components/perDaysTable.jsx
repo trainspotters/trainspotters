@@ -1,7 +1,7 @@
 'use strict';
 import React from 'react';
 import { normalizeWeekday, dateDiffInDays } from '../utils.js';
-import { journeysTimeInHours } from '../journeysUtils.js';
+import { journeysTimeInHours } from '../recordsUtils.js';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"];
 const DAYS_TO_SHOW = 366;
@@ -74,35 +74,35 @@ const WeekDays = () => (
   </g>
 )
 
-const tableData = (journeys, selected, daysToShow, colorFunction) => {
-  return groupJourneys(journeys, daysToShow).map((journeys, num) => {
+const tableData = (records, selected, daysToShow, colorFunction) => {
+  return groupRecords(records, daysToShow).map((records, num) => {
     return {
-      "color" : colorFunction(journeys),
+      "color" : colorFunction(records),
       "selected" : selected.has(num)
     };
   })
 }
 
-const groupJourneys = (journeys, daysToShow) => {
-  const groupedJourneys = Array.from(new Array(daysToShow), () => []);
+const groupRecords = (records, daysToShow) => {
+  const groupedRecords = Array.from(new Array(daysToShow), () => []);
   const now = new Date();
-  for (const i in journeys) {
-    const diff = dateDiffInDays(journeys[i].startAt, now);
+  for (const i in records) {
+    const diff = dateDiffInDays(records[i].startAt, now);
     if (diff < daysToShow) {
-      groupedJourneys[diff].push(journeys[i]);
+      groupedRecords[diff].push(records[i]);
     }
   }
-  return groupedJourneys;
+  return groupedRecords;
 }
 
-export const PerDayTable = ({journeys, selectedDays, clickDay, colorFunction}) =>
+export const PerDayTable = ({records, selectedDays, clickDay, colorFunction}) =>
   (<svg width="721" height="110" className="js-calendar-graph-svg">
     <g transform="translate(20, 20)">
       <Table
         daysToShow={DAYS_TO_SHOW}
         cellSize={CELL_SIZE}
         cellPadding={CELL_PADDING}
-        data={tableData(journeys, selectedDays, DAYS_TO_SHOW, colorFunction)}
+        data={tableData(records, selectedDays, DAYS_TO_SHOW, colorFunction)}
         todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
         clickDay={clickDay}/>
       <Months/>
@@ -110,17 +110,17 @@ export const PerDayTable = ({journeys, selectedDays, clickDay, colorFunction}) =
     </g>
   </svg>)
 
-export const whiteColorFunction = (journeys) => "#eeeeee";
-export const journeysPerDayColorFunction = (journeys) => {
-  const count = journeys.length;
+export const whiteColorFunction = (records) => "#eeeeee";
+export const recordsPerDayColorFunction = (records) => {
+  const count = records.length;
   if (count == 0) return COLORS[0];
   if (count <= 2) return COLORS[1];
   if (count <= 6) return COLORS[2];
   if (count <= 8) return COLORS[3];
   return COLORS[4];
 }
-export const journeysTimePerDayColorFunction = (journeys) => {
-  const time = journeysTimeInHours(journeys);
+export const journeysTimePerDayColorFunction = (records) => {
+  const time = journeysTimeInHours(records);
   if (time == 0) return COLORS[0];
   if (time <= 0.5) return COLORS[1];
   if (time <= 1) return COLORS[2];

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { parseRecords } from '../../actions/records';
+import { parseRecords } from '../actions/records';
 
 class RecordsImporter extends Component {
   render() {

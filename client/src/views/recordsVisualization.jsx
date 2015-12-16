@@ -1,37 +1,37 @@
 'use strict';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { JourneysStat } from '../components/journeysStat.jsx';
+import { RecordsStat } from '../components/recordsStat.jsx';
 
 import { MapStations } from '../components/mapStations.js';
-import { PerDayTable, journeysPerDayColorFunction, journeysTimePerDayColorFunction }
+import { PerDayTable, recordsPerDayColorFunction, journeysTimePerDayColorFunction }
   from '../components/perDaysTable.jsx';
 import RecordList from '../components/recordList.jsx';
-import { selectedJourneys } from '../journeysUtils.js';
+import { selectedRecords } from '../recordsUtils.js';
 import { clickDay } from '../actions/selectedDays.js';
 
-const JourneysVisualization = ({journeys, selectedDays, clickDay}) =>
+const RecordsVisualization = ({records, selectedDays, clickDay}) =>
   <div>
-    <JourneysStat journeys={journeys}/>
+    <RecordsStat records={records}/>
     <PerDayTable
-      journeys={journeys}
+      records={records}
       selectedDays={selectedDays}
       clickDay={clickDay}
-      colorFunction={journeysPerDayColorFunction}/>
+      colorFunction={recordsPerDayColorFunction}/>
     <PerDayTable
-      journeys={journeys}
+      records={records}
       selectedDays={selectedDays}
       clickDay={clickDay}
       colorFunction={journeysTimePerDayColorFunction}/>
-      <RecordList
-        records={selectedJourneys(journeys, selectedDays)}/>
-      <MapStations
-        journeys={journeys}/>
+    <RecordList
+      records={selectedRecords(records, selectedDays)}/>
+    <MapStations
+      records={records}/>
   </div>
 
 function mapStateToProps({records, selectedDays}) {
   return {
-    'journeys': records.payload != undefined ? records.payload : [],
+    'records': records.payload != undefined ? records.payload : [],
     selectedDays
   };
 }
@@ -42,4 +42,4 @@ function mapActionsToProps (dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(JourneysVisualization);
+export default connect(mapStateToProps, mapActionsToProps)(RecordsVisualization);

@@ -4,14 +4,14 @@ import React, { Component } from 'react';
 import { Map, Polyline, TileLayer } from 'react-leaflet';
 import { getCoordinateByName } from '../utils';
 import stations from '../../../stations.json';
-import { isLegalTwoSidedJourney } from '../journeysUtils.js'
+import { isLegalTwoSidedJourney } from '../recordsUtils.js'
 
 export class MapStations extends Component {
   render() {
-    const { journeys } = this.props;
+    const { records } = this.props;
     const position = [51.505, -0.09];
 
-    const newJourneys = journeys
+    const newRecords = records
       .filter(isLegalTwoSidedJourney)
       .map((record) => {
         const to = getCoordinateByName(record.to) || {};
@@ -26,7 +26,7 @@ export class MapStations extends Component {
         };
       });
 
-    const markers = newJourneys.map((station) => {
+    const markers = newRecords.map((station) => {
       if(station.from_lat && station.from_lng && station.to_lat && station.to_lng) {
         return (
           <Polyline positions={[[station.from_lat, station.from_lng],[station.to_lat, station.to_lng]]} key={station.startAt}/>
