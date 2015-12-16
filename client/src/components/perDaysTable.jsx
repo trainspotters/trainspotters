@@ -96,22 +96,19 @@ const groupJourneys = (journeys, daysToShow) => {
 }
 
 export const PerDayTable = ({journeys, selectedDays, clickDay, colorFunction}) =>
-  {
-    console.log(journeys)
-    return (<svg width="721" height="110" className="js-calendar-graph-svg">
-      <g transform="translate(20, 20)">
-        <Table
-          daysToShow={DAYS_TO_SHOW}
-          cellSize={CELL_SIZE}
-          cellPadding={CELL_PADDING}
-          data={tableData(journeys, selectedDays, DAYS_TO_SHOW, colorFunction)}
-          todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
-          clickDay={clickDay}/>
-        <Months/>
-        <WeekDays/>
-      </g>
-    </svg>)
-  }
+  (<svg width="721" height="110" className="js-calendar-graph-svg">
+    <g transform="translate(20, 20)">
+      <Table
+        daysToShow={DAYS_TO_SHOW}
+        cellSize={CELL_SIZE}
+        cellPadding={CELL_PADDING}
+        data={tableData(journeys, selectedDays, DAYS_TO_SHOW, colorFunction)}
+        todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
+        clickDay={clickDay}/>
+      <Months/>
+      <WeekDays/>
+    </g>
+  </svg>)
 
 export const whiteColorFunction = (journeys) => "#eeeeee";
 export const journeysPerDayColorFunction = (journeys) => {
