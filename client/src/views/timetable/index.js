@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clickDay } from '../../actions/selectedDays.js';
-import { normalizeWeekday, dateDiffInDays } from '../../utils.js';
+import { normalizeWeekday, dateDiffInDays, MS_PER_HOUR, isLegalTwoSidedJourney } from '../../utils.js';
 import RecordList from '../../components/recordList';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"];
@@ -138,7 +138,16 @@ const journeysPerDayColorFunction = (journeys) => {
   return COLORS[4];
 }
 const journeysTimePerDayColorFunction = (journeys) => {
-  return whiteColorFunction(journeys);
+  // todo: use moments, remove MS_PER_HOUR
+  const time = journeys
+    .filter(isLegalTwoSidedJourney)
+    .map((journey) => journey.endAt - journey.startAt)
+    .reduce((prev, cur) => prev + cur, 0) / MS_PER_HOUR;
+  if (time == 0) return COLORS[0];
+  if (time <= 0.5) return COLORS[1];
+  if (time <= 1) return COLORS[2];
+  if (time <= 2) return COLORS[3];
+  return COLORS[4];
 }
 
 const JourneysTables = ({records, selectedDays, clickDay}) =>

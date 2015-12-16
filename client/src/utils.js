@@ -1,8 +1,10 @@
 'use strict';
 import _ from 'underscore';
 import stations from '../../stations.json';
+import { recordTypes } from 'trainspotters-parser';
 
-const MS_PER_DAY = 1000 * 60 * 60 * 24;
+export const MS_PER_HOUR = 1000 * 60 * 60;
+export const MS_PER_DAY = MS_PER_HOUR * 24;
 
 export const normalizeWeekday = (day) => (day % 7 + 7) % 7;
 
@@ -17,3 +19,8 @@ export const dateDiffInDays = (a, b) => {
 export const getCoordinateByName = (name) => {
   return _.find(stations, ({names}) => { return names.indexOf(name) > -1; });
 }
+
+export const isLegalTwoSidedJourney = (journey) =>
+  journey.type === recordTypes.undergroundJourney &&
+  journey.startAt != undefined &&
+  journey.endAt != undefined;
