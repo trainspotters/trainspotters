@@ -14,10 +14,7 @@ const CELL_PADDING = 2;
 // data [daysToShow elements, 0 corresponds to today, 1 to yesterday,...]
 // each data element looks like {"fill": "#eeeeee", "selected": "true"}
 // todaysWeekday from 0 to 6 inclusive
-const Table = (props) => {
-  const { daysToShow, cellSize, cellPadding, data, todaysWeekday, originalProps } = props;
-  const clickDay = originalProps["clickDay"];
-
+const Table = ({ daysToShow, cellSize, cellPadding, data, todaysWeekday, clickDay }) => {
   // day                   -> row                  , col
   // 0                     -> todaysWeekday        , ?
   // daysToShow-1          -> ?                    , 0
@@ -127,7 +124,7 @@ const selectedJourneys = (records, selected) => {
   });
 }
 
-const TimeTable = (props) =>
+const TimeTable = ({records, selectedDays, clickDay}) =>
   (<div>
     <svg width="721" height="110" className="js-calendar-graph-svg">
       <g transform="translate(20, 20)">
@@ -135,14 +132,14 @@ const TimeTable = (props) =>
           daysToShow={DAYS_TO_SHOW}
           cellSize={CELL_SIZE}
           cellPadding={CELL_PADDING}
-          data={tableData(props.records, props.selectedDays.selected, DAYS_TO_SHOW)}
+          data={tableData(records, selectedDays.selected, DAYS_TO_SHOW)}
           todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
-          originalProps={props}/>
+          clickDay={clickDay}/>
         <Months/>
         <WeekDays/>
       </g>
     </svg>
-    <RecordList records={selectedJourneys(props.records, props.selectedDays.selected)}/>
+    <RecordList records={selectedJourneys(records, selectedDays.selected)}/>
   </div>)
 
 function mapStateToProps({records, selectedDays}) {
