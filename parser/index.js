@@ -104,11 +104,17 @@ module.exports = {
     });
   },
   parseRecord: function(rawRecord) {
+    var startAtMoment = moment(`${rawRecord.Date} {${rawRecord['Start Time']}}`, DATE_FORMAT);
+    var endAtMoment = moment(`${rawRecord.Date} {${rawRecord['End Time']}}`, DATE_FORMAT);
+    if (endAtMoment.isBefore(startAtMoment)) {
+      endAtMoment = endAtMoment.add(1, 'd');
+    }
+
     return Object.assign(
       {
         description: rawRecord['Journey/Action'],
-        startAt: moment(`${rawRecord.Date} {${rawRecord['Start Time']}}`, DATE_FORMAT).toDate(),
-        endAt: moment(`${rawRecord.Date} {${rawRecord['End Time']}}`, DATE_FORMAT).toDate(),
+        startAt: startAtMoment.toDate(),
+        endAt: endAtMoment.toDate(),
         note: rawRecord.Note,
       },
       parseDescription(rawRecord['Journey/Action']),
