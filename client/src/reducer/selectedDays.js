@@ -3,21 +3,18 @@ import {
   DAY_CLICKED,
 } from '../actions/selectedDays';
 
-const initialState = {
-  selected: new Set(),
-};
+const initialState = new Set();
 
-export default function selectedDays(state = initialState, {type, payload}) {
+export default function selectedDays(state = initialState, {type, day}) {
   switch (type) {
     case DAY_CLICKED:
-      if (state.selected.has(payload)) {
-        state.selected.delete(payload);
+      const newState = new Set(state);
+      if (state.has(day)) {
+        newState.delete(day);
       } else {
-        state.selected.add(payload);
+        newState.add(day);
       }
-      return {
-        selected: state.selected
-      };
+      return newState;
     default:
       return state;
   }

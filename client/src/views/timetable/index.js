@@ -120,7 +120,7 @@ const selectedJourneys = (records, selected) => {
   const now = new Date();
   return records.payload.filter((journey) => {
     const diff = dateDiffInDays(journey.startAt, now);
-    return selected[diff];
+    return selected.has(diff);
   });
 }
 
@@ -132,14 +132,14 @@ const TimeTable = ({records, selectedDays, clickDay}) =>
           daysToShow={DAYS_TO_SHOW}
           cellSize={CELL_SIZE}
           cellPadding={CELL_PADDING}
-          data={tableData(records, selectedDays.selected, DAYS_TO_SHOW)}
+          data={tableData(records, selectedDays, DAYS_TO_SHOW)}
           todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
           clickDay={clickDay}/>
         <Months/>
         <WeekDays/>
       </g>
     </svg>
-    <RecordList records={selectedJourneys(records, selectedDays.selected)}/>
+    <RecordList records={selectedJourneys(records, selectedDays)}/>
   </div>)
 
 function mapStateToProps({records, selectedDays}) {
