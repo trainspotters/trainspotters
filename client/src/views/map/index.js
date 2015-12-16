@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { Map, Polyline, TileLayer } from 'react-leaflet';
 import { connect } from 'react-redux';
 import { getCoordinateByName } from '../../utils';
-import { recordTypes } from 'trainspotters-parser';
+import stations from '../../../../stations.json';
+import { isLegalTwoSidedJourney } from '../../journeysUtils.js'
 
 export class MapStations extends Component {
   render() {
@@ -14,7 +15,7 @@ export class MapStations extends Component {
 
     if(records.payload) {
       const newrecords = records.payload
-        .filter((record) => record.type === recordTypes.undergroundJourney)
+        .filter(isLegalTwoSidedJourney)
         .map((record) => {
           const to = getCoordinateByName(record.to) || {};
           const from = getCoordinateByName(record.from) || {};

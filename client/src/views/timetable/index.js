@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { clickDay } from '../../actions/selectedDays.js';
-import { normalizeWeekday, dateDiffInDays, MS_PER_HOUR, isLegalTwoSidedJourney } from '../../utils.js';
+import { normalizeWeekday, dateDiffInDays } from '../../utils.js';
+import { journeysTimeInHours } from '../../journeysUtils.js';
 import RecordList from '../../components/recordList';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"];
@@ -80,8 +81,6 @@ const tableData = (records, selected, daysToShow, colorFunction) => {
   const groupedJourneys =
     groupJourneys(records.payload != undefined ? records.payload : [], daysToShow);
 
-  console.log(groupedJourneys);
-
   return groupedJourneys.map((journeys, num) => {
     return {
       "color" : colorFunction(journeys),
@@ -138,11 +137,7 @@ const journeysPerDayColorFunction = (journeys) => {
   return COLORS[4];
 }
 const journeysTimePerDayColorFunction = (journeys) => {
-  // todo: use moments, remove MS_PER_HOUR
-  const time = journeys
-    .filter(isLegalTwoSidedJourney)
-    .map((journey) => journey.endAt - journey.startAt)
-    .reduce((prev, cur) => prev + cur, 0) / MS_PER_HOUR;
+  const time = journeysTimeInHours(journeys);
   if (time == 0) return COLORS[0];
   if (time <= 0.5) return COLORS[1];
   if (time <= 1) return COLORS[2];
