@@ -11,7 +11,7 @@ export const RecordsStat = ({records}) => {
 
   return (<div>
     <div>Journeys cumulative duration: {journeysTime} hours.</div>
-    <div>Journeys count (not including bus journeys): {twoSideJourneysCount}.</div>
+    <div>Underground journeys count: {twoSideJourneysCount}.</div>
     <div>Average journey time: {(journeysTime/twoSideJourneysCount)*60} minutes.</div>
     <div>Bus journeys count: {busJourneys}.</div>
   </div>);
