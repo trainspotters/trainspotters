@@ -1,14 +1,18 @@
 'use strict';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { clickDay } from '../../actions/selectedDays.js';
-import RecordList from '../../components/recordList';
-import { selectedJourneys } from '../../journeysUtils.js'
-import { PerDayTable, journeysPerDayColorFunction, journeysTimePerDayColorFunction }
-  from '../../components/perDaysTable.jsx';
+import { JourneysStat } from '../components/journeysStat.jsx';
 
-const JourneysTables = ({journeys, selectedDays, clickDay}) =>
-  (<div>
+import MapStations from './map';
+import { PerDayTable, journeysPerDayColorFunction, journeysTimePerDayColorFunction }
+  from '../components/perDaysTable.jsx';
+import RecordList from '../components/recordList.jsx';
+import { selectedJourneys } from '../journeysUtils.js';
+import { clickDay } from '../actions/selectedDays.js';
+
+const JourneysVisualization = ({journeys, selectedDays, clickDay}) =>
+  <div>
+    <JourneysStat journeys={journeys}/>
     <PerDayTable
       journeys={journeys}
       selectedDays={selectedDays}
@@ -19,9 +23,10 @@ const JourneysTables = ({journeys, selectedDays, clickDay}) =>
       selectedDays={selectedDays}
       clickDay={clickDay}
       colorFunction={journeysTimePerDayColorFunction}/>
-    <RecordList
-      records={selectedJourneys(journeys, selectedDays)}/>
-  </div>)
+      <RecordList
+        records={selectedJourneys(journeys, selectedDays)}/>
+      <MapStations/>
+  </div>
 
 function mapStateToProps({records, selectedDays}) {
   return {
@@ -36,4 +41,4 @@ function mapActionsToProps (dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(JourneysTables);
+export default connect(mapStateToProps, mapActionsToProps)(JourneysVisualization);

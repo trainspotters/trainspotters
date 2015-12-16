@@ -6,18 +6,14 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import RecordsImporter from './views/recordsImporter';
-import MapStations from './views/map';
-import JourneysTables from './views/timetable';
-import AllJourneysStat from './views/allJourneysStat.jsx'
+import JourneysVisualization from './views/journeysVisualization.jsx'
 
 const App = () => {
   return (<div>
     <Provider store={store}>
       <div>
         <RecordsImporter/>
-        <AllJourneysStat/>
-        <JourneysTables/>
-        <MapStations/>
+        <JourneysVisualization/>
       </div>
     </Provider>
   </div>)
