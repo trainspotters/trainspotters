@@ -124,22 +124,29 @@ const selectedJourneys = (records, selected) => {
   });
 }
 
-const TimeTable = ({records, selectedDays, clickDay}) =>
+const JourneysPerDayTable = ({records, selectedDays, clickDay}) =>
+  (<svg width="721" height="110" className="js-calendar-graph-svg">
+    <g transform="translate(20, 20)">
+      <Table
+        daysToShow={DAYS_TO_SHOW}
+        cellSize={CELL_SIZE}
+        cellPadding={CELL_PADDING}
+        data={tableData(records, selectedDays, DAYS_TO_SHOW)}
+        todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
+        clickDay={clickDay}/>
+      <Months/>
+      <WeekDays/>
+    </g>
+  </svg>)
+
+const JourneysTables = ({records, selectedDays, clickDay}) =>
   (<div>
-    <svg width="721" height="110" className="js-calendar-graph-svg">
-      <g transform="translate(20, 20)">
-        <Table
-          daysToShow={DAYS_TO_SHOW}
-          cellSize={CELL_SIZE}
-          cellPadding={CELL_PADDING}
-          data={tableData(records, selectedDays, DAYS_TO_SHOW)}
-          todaysWeekday={normalizeWeekday((new Date()).getDay()-1)}
-          clickDay={clickDay}/>
-        <Months/>
-        <WeekDays/>
-      </g>
-    </svg>
-    <RecordList records={selectedJourneys(records, selectedDays)}/>
+    <JourneysPerDayTable
+      records={records}
+      selectedDays={selectedDays}
+      clickDay={clickDay}/>
+    <RecordList
+      records={selectedJourneys(records, selectedDays)}/>
   </div>)
 
 function mapStateToProps({records, selectedDays}) {
@@ -152,4 +159,4 @@ function mapActionsToProps (dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(TimeTable);
+export default connect(mapStateToProps, mapActionsToProps)(JourneysTables);
