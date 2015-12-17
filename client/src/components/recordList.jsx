@@ -5,8 +5,8 @@ import { recordTypes } from 'trainspotters-parser';
 export function RecordListItem({record, children}) {
   switch (record.type) {
     case recordTypes.undergroundJourney:
-      const { from, to } = record
-      return <div>Underground from { from } to { to }</div>;
+      const { from, to, duration } = record
+      return <div>Underground from { from } to { to } and took { duration/60 } minutes.</div>;
     case recordTypes.busJourney:
       const { route } = record
       return <div>Bus on route { route }</div>;
