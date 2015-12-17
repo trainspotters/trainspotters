@@ -106,15 +106,20 @@ module.exports = {
   parseRecord: function(rawRecord) {
     var startAtMoment = moment(`${rawRecord.Date} {${rawRecord['Start Time']}}`, DATE_FORMAT);
     var endAtMoment = moment(`${rawRecord.Date} {${rawRecord['End Time']}}`, DATE_FORMAT);
+
     if (endAtMoment.isBefore(startAtMoment)) {
       endAtMoment = endAtMoment.add(1, 'd');
     }
+
+    // duration of the journey in seconds
+    var duration = moment.duration(endAtMoment.diff(startAtMoment)).asSeconds();
 
     return Object.assign(
       {
         description: rawRecord['Journey/Action'],
         startAt: startAtMoment.toDate(),
         endAt: endAtMoment.toDate(),
+        duration,
         note: rawRecord.Note,
       },
       parseDescription(rawRecord['Journey/Action']),
