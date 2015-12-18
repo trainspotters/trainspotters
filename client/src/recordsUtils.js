@@ -1,6 +1,7 @@
 'use strict';
 import { recordTypes } from 'trainspotters-parser';
-import { SECONDS_PER_HOUR, dateDiffInDays } from './utils.js';
+import { dateDiffInDays } from './utils.js';
+import moment from 'moment';
 
 export const isLegalTwoSidedJourney = (record) =>
   record.type === recordTypes.undergroundJourney &&
@@ -10,10 +11,12 @@ export const isLegalTwoSidedJourney = (record) =>
   record.endAt;
 
 export const journeysTimeInHours = (records) =>
-  // use moments instead of SECONDS_PER_HOUR
+  moment.duration(journeysTimeInSeconds(records), 'seconds').asHours();
+
+export const journeysTimeInSeconds = (records) =>
   records
     .filter(isLegalTwoSidedJourney)
-    .reduce((prev, cur) => prev + cur.duration, 0) / SECONDS_PER_HOUR;
+    .reduce((prev, cur) => prev + cur.duration, 0);
 
 export const selectedRecords = (records, selected) => {
   const now = new Date();

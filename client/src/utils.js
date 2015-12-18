@@ -1,5 +1,6 @@
 'use strict';
 import stations from '../../stations.json';
+import moment from 'moment';
 
 export const MS_PER_HOUR = 1000 * 60 * 60;
 export const SECONDS_PER_HOUR = 60 * 60;
@@ -8,12 +9,8 @@ export const MS_PER_DAY = MS_PER_HOUR * 24;
 export const normalizeWeekday = (day) => (day % 7 + 7) % 7;
 
 // a and b are javascript Date objects
-// XXX use moment.diff and moment.duration
 export const dateDiffInDays = (a, b) => {
-  // Discard the time and time-zone information.
-  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-  return Math.floor((utc2 - utc1) / MS_PER_DAY);
+  return moment(b).startOf('day').diff(moment(a).startOf('day'), 'days');
 }
 
 export const getCoordinateByName = (name) => {
