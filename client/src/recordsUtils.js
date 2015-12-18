@@ -4,8 +4,10 @@ import { SECONDS_PER_HOUR, dateDiffInDays } from './utils.js';
 
 export const isLegalTwoSidedJourney = (record) =>
   record.type === recordTypes.undergroundJourney &&
-  record.from != undefined && record.to != undefined &&
-  record.startAt != undefined && record.endAt != undefined;
+  record.from &&
+  record.to &&
+  record.startAt &&
+  record.endAt;
 
 export const journeysTimeInHours = (records) =>
   // use moments instead of SECONDS_PER_HOUR
