@@ -66,8 +66,8 @@ export class MapStations extends Component {
       <Map style={{width: "100%", height: "500px"}} center={position} zoom={12}>
         <TileLayer
           url='https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'
-          id='vjo.lc4i086e'
-          accessToken='pk.eyJ1IjoidmpvIiwiYSI6ImNiNzVkNjQzMzhhY2VmMDRjMGE5ZDc5NTgwMDM0MTczIn0.rgcheF2XHUXNSx5iFtribw'
+          id='vjo.ofhbpcpo'
+          accessToken='pk.eyJ1IjoidmpvIiwiYSI6ImNpaWRwb3RjbjAwMHl3MGtycXQ0eGVpY2UifQ.Tiu_2hkkMkFXWJKupI4iaw'
         />
         { markers }
       </Map>
