@@ -57,6 +57,7 @@ export class MapStations extends Component {
         ]}
         color={similarJourneysColorFunction(station.similar_journeys)}
         opacity={1}
+        weight={3}
         key={station.startAt}
         />);
     });
