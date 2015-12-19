@@ -24,14 +24,20 @@ export class MapStations extends Component {
           from_lng: from.lng,
           ...record
         };
+      })
+      .filter(({to_lat, to_lng, from_lat, from_lng}) => {
+        // only keep records who can be maped
+        return to_lat && to_lng && from_lat && from_lng;
       });
 
     const markers = newRecords.map((station) => {
-      if(station.from_lat && station.from_lng && station.to_lat && station.to_lng) {
-        return (
-          <Polyline positions={[[station.from_lat, station.from_lng],[station.to_lat, station.to_lng]]} key={station.startAt}/>
-        );
-      }
+      return (<Polyline
+        positions={[
+          [station.from_lat, station.from_lng],
+          [station.to_lat, station.to_lng]
+        ]}
+        key={station.startAt}
+        />);
     });
 
     return (
