@@ -12,12 +12,35 @@ import { clickDay } from '../actions/selectedDays.js';
 import { toggleTableDayVisualization } from '../actions/toggleVisualization';
 
 const RecordsVisualization = ({records, selectedDays, clickDay, toggleTableDayVisualization, toggleVisualization}) => {
-  const { dayTableVisualization } = toggleVisualization;
+  const { dayTableVisualization, journeysPerDay, timePerDay } = toggleVisualization;
 
   return (
     <div>
       <RecordsStat records={records}/>
-      <button onClick={() => { toggleTableDayVisualization() }}>Toggle table day visualization function</button><br/>
+
+      <div>
+        <input
+          id={"r1"}
+          type={"radio"}
+          checked={journeysPerDay}
+          onClick={() => { toggleTableDayVisualization() }}
+        />
+        <label
+          htmlFor={"r1"}
+          name={"toggleDayVisualization"}
+          >Journeys per day</label>
+        <input
+          id={"r2"}
+          type={"radio"}
+          checked={timePerDay}
+          onClick={() => { toggleTableDayVisualization() }}
+        />
+        <label
+          htmlFor={"r2"}
+          name={"toggleDayVisualization"}
+          >Time per day</label>
+      </div>
+
       <PerDayTable
         records={records}
         selectedDays={selectedDays}
