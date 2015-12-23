@@ -16,9 +16,7 @@ const RecordsVisualization = ({records, selectedDays, clickDay, toggleVisualizat
   return (
     <div>
       <RecordsStat records={records}/>
-
       <SwitchVisualization />
-
       <PerDayTable
         records={records}
         selectedDays={selectedDays}

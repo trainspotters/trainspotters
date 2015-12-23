@@ -12,3 +12,36 @@ body {
   text-align: center;
   font: 10px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
+
+.switch-toggle div {
+  width: 300px;
+  overflow: hidden;
+}
+
+.switch-toggle input {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+
+.switch-toggle label {
+  width: 48%;
+  position: relative;
+  z-index: 2;
+  display: block;
+  float: left;
+  margin: 0;
+  text-align: center;
+  cursor: pointer;
+  line-height: 2em;
+  border: 1px solid #000;
+  background: #777;
+  color: #ccc;
+  box-shadow: inset 0px 2px 20px 2px #444;
+}
+
+.switch-toggle input:checked + label {
+  background: #FFF;
+  color: #000;
+  box-shadow: none;
+}

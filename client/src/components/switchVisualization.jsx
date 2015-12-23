@@ -7,27 +7,29 @@ const SwitchVisualization = ({toggleTableDayVisualization, toggleVisualization})
   const { dayTableVisualization, journeysPerDay, timePerDay } = toggleVisualization;
 
   return (
-    <div>
-      <input
-        id={"r1"}
-        type={"radio"}
-        checked={journeysPerDay}
-        onClick={() => { toggleTableDayVisualization() }}
-      />
-      <label
-        htmlFor={"r1"}
-        name={"toggleDayVisualization"}
-      >Journeys per day</label>
-      <input
-        id={"r2"}
-        type={"radio"}
-        checked={timePerDay}
-        onClick={() => { toggleTableDayVisualization() }}
-      />
-      <label
-        htmlFor={"r2"}
-        name={"toggleDayVisualization"}
-      >Time per day</label>
+    <div className={"switch-toggle"}>
+      <div>
+        <input
+          id={"r1"}
+          type={"radio"}
+          checked={journeysPerDay}
+          onClick={() => { journeysPerDay ? '' : toggleTableDayVisualization() }}
+        />
+        <label
+          htmlFor={"r1"}
+          name={"toggleDayVisualization"}
+        >Journeys per day</label>
+        <input
+          id={"r2"}
+          type={"radio"}
+          checked={timePerDay}
+          onClick={() => { timePerDay ? '' : toggleTableDayVisualization() }}
+        />
+        <label
+          htmlFor={"r2"}
+          name={"toggleDayVisualization"}
+        >Time per day</label>
+      </div>
     </div>
   );
 };
