@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { RecordsStat } from '../components/recordsStat.jsx';
 
 import { MapStations } from '../components/mapStations.js';
-import { PerDayTable, recordsPerDayColorFunction, journeysTimePerDayColorFunction }
-  from '../components/perDaysTable.jsx';
+import { PerDayTable } from '../components/perDaysTable.jsx';
 import RecordList from '../components/recordList.jsx';
 import { selectedRecords } from '../recordsUtils.js';
 import { clickDay } from '../actions/selectedDays.js';
