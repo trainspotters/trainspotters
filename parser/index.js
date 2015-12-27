@@ -1,6 +1,7 @@
 'use strict';
 var parse = require('csv-parse');
 var moment = require('moment');
+var vincenty = require('node-vincenty');
 var stations = require('./stations.json');
 
 var DATE_FORMAT = 'DD-MMM-YYYY H:mm';
@@ -127,6 +128,9 @@ module.exports = {
     var from = getCoordinateByName(journey.from) || {};
     var to = getCoordinateByName(journey.to) || {};
 
+    // distance in meter between `from` and `to`
+    var distance = vincenty.distVincenty(from.lat, from.lng, to.lat, to.lng).distance || 0;
+
     return Object.assign(
       {
         description: rawRecord['Journey/Action'],
@@ -134,6 +138,7 @@ module.exports = {
         endAt: endAtMoment.toDate(),
         note: rawRecord.Note,
         duration,
+        distance,
         type: journey.type,
         route: journey.route,
         at: journey.at,
