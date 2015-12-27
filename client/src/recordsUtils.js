@@ -28,6 +28,11 @@ export const journeysTimeInSeconds = (records) =>
     .filter(isLegalTwoSidedJourney)
     .reduce((prev, cur) => prev + cur.duration, 0);
 
+export const journeysTotalDistance = (records) =>
+  records
+    .filter(isLegalTwoSidedJourney)
+    .reduce((prev, cur) => prev + cur.distance, 0);
+
 export const selectedRecords = (records, selected) => {
   const now = new Date();
   return records.filter((record) => {

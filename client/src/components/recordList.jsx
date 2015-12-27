@@ -1,12 +1,14 @@
 'use strict';
 import React from 'react';
 import { recordTypes } from 'trainspotters-parser';
+import { formatMeterToKilometer } from '../utils.js';
 
 export function RecordListItem({record, children}) {
   switch (record.type) {
     case recordTypes.undergroundJourney:
-      const { from, to, duration } = record
-      return <div>Underground from { from.name } to { to.name } and took { duration/60 } minutes.</div>;
+      const { from, to, duration, distance } = record
+      const formatedDistance = formatMeterToKilometer(distance);
+      return <div>Underground from { from.name } to { to.name } ({ formatedDistance } km) and took { duration/60 } minutes.</div>;
     case recordTypes.busJourney:
       const { route } = record
       return <div>Bus on route { route }</div>;
