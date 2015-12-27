@@ -6,5 +6,5 @@ Features:
 ## Usage
 
 ```shell
-node stations-locator/export2json.js > stations.json
+node stations-locator/export2json.js > parser/stations.json
 ```
