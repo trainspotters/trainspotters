@@ -6,7 +6,7 @@ export function RecordListItem({record, children}) {
   switch (record.type) {
     case recordTypes.undergroundJourney:
       const { from, to, duration } = record
-      return <div>Underground from { from } to { to } and took { duration/60 } minutes.</div>;
+      return <div>Underground from { from.name } to { to.name } and took { duration/60 } minutes.</div>;
     case recordTypes.busJourney:
       const { route } = record
       return <div>Bus on route { route }</div>;
@@ -19,7 +19,6 @@ export function RecordListItem({record, children}) {
 };
 
 export default function RecordList({records}) {
-  // <RecordListItem className="recordList-item" record={record} key={index}>
   const recordItems = records.map((record, index) => <RecordListItem record={record} key={index}></RecordListItem>);
 
   return (<div className="recordList">

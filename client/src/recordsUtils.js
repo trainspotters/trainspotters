@@ -15,8 +15,8 @@ const HEATMAP_COLORS = [
 
 export const isLegalTwoSidedJourney = (record) =>
   record.type === recordTypes.undergroundJourney &&
-  record.from &&
-  record.to &&
+  record.from.name &&
+  record.to.name &&
   record.startAt &&
   record.endAt;
 

@@ -1,5 +1,7 @@
+'use strict';
 var parse = require('csv-parse');
 var moment = require('moment');
+var stations = require('./stations.json');
 
 var DATE_FORMAT = 'DD-MMM-YYYY H:mm';
 var OPTIONS = {
@@ -60,6 +62,12 @@ function parseDescription(description) {
   }, false);
 }
 
+function getCoordinateByName(name) {
+  return stations.find(function(station) {
+    return station.names.indexOf(name) > -1;
+  });
+}
+
 function extractNumbers(rawRecord) {
   return ['Charge', 'Credit', 'Balance'].reduce(function(formatted, key){
     return Object.assign({
@@ -114,15 +122,32 @@ module.exports = {
     // duration of the journey in seconds
     var duration = moment.duration(endAtMoment.diff(startAtMoment)).asSeconds();
 
+    // parse description and retrieve geo coordinate
+    var journey = parseDescription(rawRecord['Journey/Action']);
+    var from = getCoordinateByName(journey.from) || {};
+    var to = getCoordinateByName(journey.to) || {};
+
     return Object.assign(
       {
         description: rawRecord['Journey/Action'],
         startAt: startAtMoment.toDate(),
         endAt: endAtMoment.toDate(),
-        duration,
         note: rawRecord.Note,
+        duration,
+        type: journey.type,
+        route: journey.route,
+        at: journey.at,
+        from: {
+          name: journey.from,
+          lat: from.lat,
+          lng: from.lng,
+        },
+        to: {
+          name: journey.to,
+          lat: to.lat,
+          lng: to.lng,
+        },
       },
-      parseDescription(rawRecord['Journey/Action']),
       extractNumbers(rawRecord)
     );
   },

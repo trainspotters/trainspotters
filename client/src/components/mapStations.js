@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 import { Map, Polyline, TileLayer } from 'react-leaflet';
-import { getCoordinateByName } from '../utils';
-import stations from '../../../stations.json';
 import { isLegalTwoSidedJourney, similarJourneysColorFunction } from '../recordsUtils.js'
 
 export class MapStations extends Component {
@@ -13,32 +11,18 @@ export class MapStations extends Component {
 
     const newRecords = records
       .filter(isLegalTwoSidedJourney)
-      .map((record) => {
-        const to = getCoordinateByName(record.to) || {};
-        const from = getCoordinateByName(record.from) || {};
-
-        return {
-          to_lat: to.lat,
-          to_lng: to.lng,
-          from_lat: from.lat,
-          from_lng: from.lng,
-          ...record
-        };
-      })
-      .filter(({to_lat, to_lng, from_lat, from_lng}) => {
+      .filter(({to, from}) => {
         // only keep records that can be mapped
-        return to_lat && to_lng && from_lat && from_lng;
+        return to.lat && to.lng && from.lat && from.lng;
       })
-
-    const finalRecords = newRecords
       .map((record) => {
         let similar_journeys = 0;
 
-        newRecords.forEach(({to_lat, to_lng, from_lat, from_lng}) => {
-          if((record.to_lat === to_lat || record.to_lat === from_lat) &&
-             (record.to_lng === to_lng || record.to_lng === from_lng) &&
-             (record.from_lat === to_lat || record.from_lat === from_lat) &&
-             (record.from_lng === to_lng || record.from_lng === from_lng)) {
+        records.forEach(({to, from}) => {
+          if((record.to.lat === to.lat || record.to.lat === from.lat) &&
+             (record.to.lng === to.lng || record.to.lng === from.lng) &&
+             (record.from.lat === to.lat || record.from.lat === from.lat) &&
+             (record.from.lng === to.lng || record.from.lng === from.lng)) {
             similar_journeys += 1;
           }
         });
@@ -49,11 +33,11 @@ export class MapStations extends Component {
         };
       });
 
-    const markers = finalRecords.map((station) => {
+    const markers = newRecords.map((station) => {
       return (<Polyline
         positions={[
-          [station.from_lat, station.from_lng],
-          [station.to_lat, station.to_lng]
+          [station.from.lat, station.from.lng],
+          [station.to.lat, station.to.lng]
         ]}
         color={similarJourneysColorFunction(station.similar_journeys)}
         opacity={1}
