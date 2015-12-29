@@ -1,10 +1,14 @@
 'use strict';
 import React from 'react';
 import { connect } from 'react-redux';
-import { toggleTableDayVisualization } from '../actions/toggleVisualization';
+import {
+  journeysDayVisualization,
+  timeDayVisualization,
+  distanceDayVisualization,
+} from '../actions/toggleVisualization';
 
-const SwitchVisualization = ({toggleTableDayVisualization, toggleVisualization}) => {
-  const { dayTableVisualization, journeysPerDay, timePerDay } = toggleVisualization;
+const SwitchVisualization = ({journeysDayVisualization, timeDayVisualization, distanceDayVisualization, toggleVisualization}) => {
+  const { dayTableVisualization, journeysPerDay, timePerDay, distancePerDay } = toggleVisualization;
 
   return (
     <div className={"switch-toggle"}>
@@ -13,7 +17,7 @@ const SwitchVisualization = ({toggleTableDayVisualization, toggleVisualization})
           id={"r1"}
           type={"radio"}
           checked={journeysPerDay}
-          onClick={() => { journeysPerDay ? '' : toggleTableDayVisualization() }}
+          onClick={() => { journeysDayVisualization() }}
         />
         <label
           htmlFor={"r1"}
@@ -23,12 +27,22 @@ const SwitchVisualization = ({toggleTableDayVisualization, toggleVisualization})
           id={"r2"}
           type={"radio"}
           checked={timePerDay}
-          onClick={() => { timePerDay ? '' : toggleTableDayVisualization() }}
+          onClick={() => { timeDayVisualization() }}
         />
         <label
           htmlFor={"r2"}
           name={"toggleDayVisualization"}
         >Time per day</label>
+        <input
+          id={"r3"}
+          type={"radio"}
+          checked={distancePerDay}
+          onClick={() => { distanceDayVisualization() }}
+        />
+        <label
+          htmlFor={"r3"}
+          name={"toggleDayVisualization"}
+        >Distance per day</label>
       </div>
     </div>
   );
@@ -40,9 +54,12 @@ function mapStateToProps({toggleVisualization}) {
   };
 }
 
-function mapActionsToProps (dispatch) {
+function mapActionsToProps(dispatch) {
   return {
-    toggleTableDayVisualization: () => dispatch(toggleTableDayVisualization()),
+    journeysDayVisualization: () => dispatch(journeysDayVisualization()),
+    timeDayVisualization: () => dispatch(timeDayVisualization()),
+    distanceDayVisualization: () => dispatch(distanceDayVisualization()),
   };
 }
+
 export default connect(mapStateToProps, mapActionsToProps)(SwitchVisualization);

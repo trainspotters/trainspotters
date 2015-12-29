@@ -14,7 +14,7 @@ body {
 }
 
 .switch-toggle div {
-  width: 300px;
+  width: 500px;
   overflow: hidden;
 }
 
@@ -25,7 +25,7 @@ body {
 }
 
 .switch-toggle label {
-  width: 48%;
+  width: 30%;
   position: relative;
   z-index: 2;
   display: block;

@@ -1,7 +1,10 @@
 'use strict';
 import React from 'react';
 import { normalizeWeekday, dateDiffInDays } from '../utils.js';
-import { journeysTimeInHours } from '../recordsUtils.js';
+import {
+  journeysTimeInHours,
+  journeysTotalDistance,
+} from '../recordsUtils.js';
 
 const COLORS = ["#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"];
 const DAYS_TO_SHOW = 366;
@@ -110,20 +113,31 @@ export const PerDayTable = ({records, selectedDays, clickDay, colorFunction}) =>
     </g>
   </svg>)
 
-export const whiteColorFunction = (records) => "#eeeeee";
+export const whiteColorFunction = (records) => "#EEE";
+
 export const recordsPerDayColorFunction = (records) => {
   const count = records.length;
-  if (count == 0) return COLORS[0];
+  if (count === 0) return COLORS[0];
   if (count <= 2) return COLORS[1];
   if (count <= 6) return COLORS[2];
   if (count <= 8) return COLORS[3];
   return COLORS[4];
 }
+
 export const journeysTimePerDayColorFunction = (records) => {
   const time = journeysTimeInHours(records);
-  if (time == 0) return COLORS[0];
+  if (time === 0) return COLORS[0];
   if (time <= 0.5) return COLORS[1];
   if (time <= 1) return COLORS[2];
   if (time <= 2) return COLORS[3];
+  return COLORS[4];
+}
+
+export const journeysDistancePerDayColorFunction = (records) => {
+  const distance = journeysTotalDistance(records);
+  if (distance === 0) return COLORS[0];
+  if (distance <= 5000) return COLORS[1];
+  if (distance <= 10000) return COLORS[2];
+  if (distance <= 25000) return COLORS[3];
   return COLORS[4];
 }

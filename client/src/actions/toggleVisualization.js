@@ -1,14 +1,23 @@
 'use strict';
-export const TOGGLE_DAY_TABLE_VISUALIZATION = 'TOGGLE_DAY_TABLE_VISUALIZATION';
 
-export function toggleDayVisualization() {
+export const JOURNEYS_DAY_VISUALIZATION = 'JOURNEYS_DAY_VISUALIZATION';
+export const TIME_DAY_VISUALIZATION = 'TIME_DAY_VISUALIZATION';
+export const DISTANCE_DAY_VISUALIZATION = 'DISTANCE_DAY_VISUALIZATION';
+
+export function journeysDayVisualization() {
   return {
-    type: TOGGLE_DAY_TABLE_VISUALIZATION,
+    type: JOURNEYS_DAY_VISUALIZATION,
   };
 }
 
-export function toggleTableDayVisualization() {
-  return (dispatch) => {
-    dispatch(toggleDayVisualization());
+export function timeDayVisualization() {
+  return {
+    type: TIME_DAY_VISUALIZATION,
+  };
+}
+
+export function distanceDayVisualization() {
+  return {
+    type: DISTANCE_DAY_VISUALIZATION,
   };
 }
