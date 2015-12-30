@@ -23,7 +23,7 @@ var config = module.exports = {
       {
         test: /\.jsx?$/,
         include: /src/,
-        loaders: ['babel']
+        loaders: ['react-hot', 'babel']
       },
       {
         test: /\.json$/,
