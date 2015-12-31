@@ -5,17 +5,15 @@ import {
   journeysTotalDistance,
   isLegalTwoSidedJourney,
 } from '../recordsUtils.js'
-import { formatMeterToKilometer } from '../utils.js';
+import { formatMeterToKilometer, formatSecondsToMinutesAndHours } from '../utils.js';
 import { recordTypes } from 'trainspotters-parser';
-import moment from 'moment';
-import 'moment-duration-format';
 
 export const RecordsStat = ({records}) => {
   const totalSeconds = journeysTimeInSeconds(records);
   const totalDistance = journeysTotalDistance(records);
-  const journeysTime = moment.duration(totalSeconds, 'seconds').format("h [hours and] m [minutes]");
+  const journeysTime = formatSecondsToMinutesAndHours(totalSeconds);
   const twoSideJourneysCount = records.filter(isLegalTwoSidedJourney).length;
-  const avgJourneyTime = moment.duration(totalSeconds/twoSideJourneysCount, 'seconds').format("h [hours and] m [minutes]");
+  const avgJourneyTime = formatSecondsToMinutesAndHours(totalSeconds/twoSideJourneysCount);
   const busJourneys = records
     .filter((record) => record.type === recordTypes.BUS_JOURNEY).length;
 

@@ -1,5 +1,6 @@
 'use strict';
 import moment from 'moment';
+import 'moment-duration-format';
 import numeral from 'numeral';
 
 export const MS_PER_HOUR = 1000 * 60 * 60;
@@ -16,4 +17,9 @@ export const dateDiffInDays = (a, b) => {
 
 export const formatMeterToKilometer = (distance) => {
   return numeral(distance / 1000).format('0,0.0');
+}
+
+export const formatSecondsToMinutesAndHours = (seconds) => {
+  return moment.duration(seconds, 'seconds').format('h [hours and] m [minutes]');
+
 }
