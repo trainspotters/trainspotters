@@ -4,14 +4,9 @@ import {
   TIME_DAY_VISUALIZATION,
   DISTANCE_DAY_VISUALIZATION,
 } from '../actions/toggleVisualization';
-import {
-  recordsPerDayColorFunction,
-  journeysTimePerDayColorFunction,
-  journeysDistancePerDayColorFunction,
-} from '../components/perDaysTable';
 
 const initialState = {
-  dayTableVisualization: recordsPerDayColorFunction,
+  dayTableVisualization: 'RECORDS_PER_DAY',
   journeysPerDay: true,
   timePerDay: false,
   distancePerDay: false,
@@ -22,7 +17,7 @@ export default function toggleVisualization(state = initialState, { type }) {
     case JOURNEYS_DAY_VISUALIZATION:
       return {
         ...state,
-        dayTableVisualization: recordsPerDayColorFunction,
+        dayTableVisualization: 'RECORDS_PER_DAY',
         journeysPerDay: true,
         timePerDay: false,
         distancePerDay: false,
@@ -30,7 +25,7 @@ export default function toggleVisualization(state = initialState, { type }) {
     case TIME_DAY_VISUALIZATION:
       return {
         ...state,
-        dayTableVisualization: journeysTimePerDayColorFunction,
+        dayTableVisualization: 'TIME_PER_DAY',
         journeysPerDay: false,
         timePerDay: true,
         distancePerDay: false,
@@ -38,7 +33,7 @@ export default function toggleVisualization(state = initialState, { type }) {
     case DISTANCE_DAY_VISUALIZATION:
       return {
         ...state,
-        dayTableVisualization: journeysDistancePerDayColorFunction,
+        dayTableVisualization: 'DISTANCE_PER_DAY',
         journeysPerDay: false,
         timePerDay: false,
         distancePerDay: true,

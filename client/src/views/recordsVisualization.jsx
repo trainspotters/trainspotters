@@ -21,7 +21,7 @@ const RecordsVisualization = ({records, selectedDays, clickDay, toggleVisualizat
         records={records}
         selectedDays={selectedDays}
         clickDay={clickDay}
-        colorFunction={dayTableVisualization}/>
+        vizualisationType={dayTableVisualization}/>
       <RecordList
         records={selectedRecords(records, selectedDays)}/>
       <MapStations

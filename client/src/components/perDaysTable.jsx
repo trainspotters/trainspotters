@@ -98,8 +98,10 @@ const groupRecords = (records, daysToShow) => {
   return groupedRecords;
 }
 
-export const PerDayTable = ({records, selectedDays, clickDay, colorFunction}) =>
-  (<svg width="721" height="110" className="js-calendar-graph-svg">
+export const PerDayTable = ({records, selectedDays, clickDay, vizualisationType}) => {
+  const colorFunction = colorFunctions[vizualisationType];
+
+  return (<svg width="721" height="110" className="js-calendar-graph-svg">
     <g transform="translate(20, 20)">
       <Table
         daysToShow={DAYS_TO_SHOW}
@@ -111,33 +113,34 @@ export const PerDayTable = ({records, selectedDays, clickDay, colorFunction}) =>
       <Months/>
       <WeekDays/>
     </g>
-  </svg>)
+  </svg>);
+};
 
 export const whiteColorFunction = (records) => "#EEE";
 
-export const recordsPerDayColorFunction = (records) => {
-  const count = records.length;
-  if (count === 0) return COLORS[0];
-  if (count <= 2) return COLORS[1];
-  if (count <= 6) return COLORS[2];
-  if (count <= 8) return COLORS[3];
-  return COLORS[4];
-}
-
-export const journeysTimePerDayColorFunction = (records) => {
-  const time = journeysTimeInHours(records);
-  if (time === 0) return COLORS[0];
-  if (time <= 0.5) return COLORS[1];
-  if (time <= 1) return COLORS[2];
-  if (time <= 2) return COLORS[3];
-  return COLORS[4];
-}
-
-export const journeysDistancePerDayColorFunction = (records) => {
-  const distance = journeysTotalDistance(records);
-  if (distance === 0) return COLORS[0];
-  if (distance <= 5000) return COLORS[1];
-  if (distance <= 10000) return COLORS[2];
-  if (distance <= 25000) return COLORS[3];
-  return COLORS[4];
-}
+const colorFunctions = {
+  RECORDS_PER_DAY(records) {
+    const count = records.length;
+    if (count === 0) return COLORS[0];
+    if (count <= 2) return COLORS[1];
+    if (count <= 6) return COLORS[2];
+    if (count <= 8) return COLORS[3];
+    return COLORS[4];
+  },
+  TIME_PER_DAY(records) {
+    const time = journeysTimeInHours(records);
+    if (time === 0) return COLORS[0];
+    if (time <= 0.5) return COLORS[1];
+    if (time <= 1) return COLORS[2];
+    if (time <= 2) return COLORS[3];
+    return COLORS[4];
+  },
+  DISTANCE_PER_DAY(records) {
+    const distance = journeysTotalDistance(records);
+    if (distance === 0) return COLORS[0];
+    if (distance <= 5000) return COLORS[1];
+    if (distance <= 10000) return COLORS[2];
+    if (distance <= 25000) return COLORS[3];
+    return COLORS[4];
+  }
+};
