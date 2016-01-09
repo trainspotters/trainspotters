@@ -17,7 +17,7 @@ const SwitchVisualization = ({journeysDayVisualization, timeDayVisualization, di
           id={"r1"}
           type={"radio"}
           checked={journeysPerDay}
-          onClick={() => { journeysDayVisualization() }}
+          onChange={() => { journeysDayVisualization() }}
         />
         <label
           htmlFor={"r1"}
@@ -27,7 +27,7 @@ const SwitchVisualization = ({journeysDayVisualization, timeDayVisualization, di
           id={"r2"}
           type={"radio"}
           checked={timePerDay}
-          onClick={() => { timeDayVisualization() }}
+          onChange={() => { timeDayVisualization() }}
         />
         <label
           htmlFor={"r2"}
@@ -37,7 +37,7 @@ const SwitchVisualization = ({journeysDayVisualization, timeDayVisualization, di
           id={"r3"}
           type={"radio"}
           checked={distancePerDay}
-          onClick={() => { distanceDayVisualization() }}
+          onChange={() => { distanceDayVisualization() }}
         />
         <label
           htmlFor={"r3"}
