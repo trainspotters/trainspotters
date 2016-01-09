@@ -22,9 +22,9 @@ export function RecordListItem({record, children}) {
 };
 
 export default function RecordList({records}) {
-  const recordItems = records.map((record, index) => <RecordListItem record={record} key={index}></RecordListItem>);
+  const recordItems = records.map((record, index) => <RecordListItem record={record} key={index} />);
 
   return (<div className="recordList">
     {recordItems}
-  </div>)
+  </div>);
 };
