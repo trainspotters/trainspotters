@@ -32,6 +32,7 @@
     "react-leaflet": "^0.9.0",
     "react-redux": "^4.0.0",
     "redux": "^3.0.4",
+    "redux-persist": "^1.5.0",
     "redux-thunk": "^1.0.0",
     "trainspotters-parser": "file:../parser",
     "whatwg-fetch": "^0.10.1"
