@@ -15,7 +15,7 @@ export const RecordsStat = ({records}) => {
   const twoSideJourneysCount = records.filter(isLegalTwoSidedJourney).length;
   const avgJourneyTime = formatSecondsToMinutesAndHours(totalSeconds/twoSideJourneysCount);
   const busJourneys = records
-    .filter((record) => record.type === recordTypes.BUS_JOURNEY).length;
+    .filter((record) => record.type === recordTypes.busJourney).length;
 
   return (<div>
     <div>Journeys cumulative duration: {journeysTime}.</div>
