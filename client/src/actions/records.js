@@ -24,15 +24,35 @@ export function recordsParsingFailure(error) {
   };
 }
 
+function parseAFile(rawData) {
+  return getRawFromString(rawData)
+    .then((rawRecords) => {
+      return rawRecords.map(parseRecord);
+    });
+}
+
+export function parseFiles(filesContent) {
+  return (dispatch) => {
+    dispatch(recordsParsingStart());
+    return Promise.all(
+      filesContent.map(parseAFile)
+    ).then(function concatAllRecords(recordsPerFile){
+      return [].concat(...recordsPerFile);
+    }).then((records) => {
+      dispatch(recordsParsingSuccess(records));
+    })
+    .catch((error) => {
+      dispatch(recordsParsingFailure(error));
+    });
+  }
+}
+
 export function parseRecords(rawData) {
   return (dispatch) => {
 
     dispatch(recordsParsingStart());
 
-    getRawFromString(rawData)
-      .then((rawRecords) => {
-        return rawRecords.map(parseRecord);
-      })
+    return parseAFile(rawData)
       .then((records) => {
         dispatch(recordsParsingSuccess(records));
       })
