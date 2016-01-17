@@ -13,6 +13,9 @@ const finalCreateStore = compose(
 
 export function createNewStore(initialState) {
   const store = finalCreateStore(reducer, initialState);
+  const config = {
+    blacklist: ['selectedDays'],
+  };
 
   if (module.hot) {
     module.hot.accept('../reducer', () =>
@@ -20,7 +23,7 @@ export function createNewStore(initialState) {
     );
   }
 
-  persistStore(store);
+  persistStore(store, config);
 
   return store;
 };

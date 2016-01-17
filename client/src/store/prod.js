@@ -9,7 +9,12 @@ export function createNewStore() {
     applyMiddleware(thunk),
     autoRehydrate(),
   )(createStore)(reducer);
-  persistStore(store);
+  const config = {
+    blacklist: ['selectedDays'],
+  };
+
+  persistStore(store, config);
+
   return store;
 }
 
