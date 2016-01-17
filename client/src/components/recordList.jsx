@@ -1,15 +1,21 @@
 'use strict';
 import React from 'react';
 import { recordTypes } from 'trainspotters-parser';
-import { formatMeterToKilometer, formatSecondsToMinutesAndHours } from '../utils.js';
+import {
+  formatMeterToKilometer,
+  formatMeterToMile,
+  formatSecondsToMinutesAndHours
+} from '../utils.js';
 
-export function RecordListItem({record, children}) {
+export function RecordListItem({record, toggleUnitSystem}) {
   switch (record.type) {
     case recordTypes.undergroundJourney:
-      const { from, to, duration, distance } = record
-      const formatedDistance = formatMeterToKilometer(distance);
+      const { from, to, duration, distance } = record;
+      const distanceString = toggleUnitSystem.metric ?
+        `${formatMeterToKilometer(distance)} km` :
+        `${formatMeterToMile(distance)} miles`;
       const formatedDuration = formatSecondsToMinutesAndHours(duration);
-      return <div>Underground from { from.name } to { to.name } ({ formatedDistance } km) and took { formatedDuration }.</div>;
+      return <div>Underground from { from.name } to { to.name } ({ distanceString }) and took { formatedDuration }.</div>;
     case recordTypes.busJourney:
       const { route } = record
       return <div>Bus on route { route }</div>;
@@ -21,8 +27,8 @@ export function RecordListItem({record, children}) {
   }
 };
 
-export default function RecordList({records}) {
-  const recordItems = records.map((record, index) => <RecordListItem record={record} key={index} />);
+export default function RecordList({records, toggleUnitSystem}) {
+  const recordItems = records.map((record, index) => <RecordListItem record={record} key={index} toggleUnitSystem={toggleUnitSystem} />);
 
   return (<div className="recordList">
     {recordItems}

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RecordsStat } from '../components/recordsStat.jsx';
+import SwitchUnitSystem from '../components/switchUnitSystem';
 import SwitchVisualization from '../components/switchVisualization';
 import { MapStations } from '../components/mapStations.js';
 import { PerDayTable } from '../components/perDaysTable.jsx';
@@ -10,31 +11,40 @@ import { selectedRecords } from '../recordsUtils.js';
 import { clickDay } from '../actions/selectedDays.js';
 import { toggleTableDayVisualization } from '../actions/toggleVisualization';
 
-const RecordsVisualization = ({records, selectedDays, clickDay, toggleVisualization}) => {
+const RecordsVisualization = ({records, selectedDays, clickDay, toggleVisualization, toggleUnitSystem}) => {
   const { dayTableVisualization } = toggleVisualization;
 
   return (
     <div>
-      <RecordsStat records={records}/>
+      <SwitchUnitSystem />
+      <RecordsStat
+        records={records}
+        toggleUnitSystem={toggleUnitSystem}
+      />
       <SwitchVisualization />
       <PerDayTable
         records={records}
         selectedDays={selectedDays}
         clickDay={clickDay}
-        vizualisationType={dayTableVisualization}/>
+        vizualisationType={dayTableVisualization}
+      />
       <RecordList
-        records={selectedRecords(records, selectedDays)}/>
+        records={selectedRecords(records, selectedDays)}
+        toggleUnitSystem={toggleUnitSystem}
+      />
       <MapStations
-        records={records}/>
+        records={records}
+      />
     </div>
   );
 }
 
-function mapStateToProps({records, selectedDays, toggleVisualization}) {
+function mapStateToProps({records, selectedDays, toggleVisualization, toggleUnitSystem}) {
   return {
     'records': records.payload != undefined ? records.payload : [],
     selectedDays,
     toggleVisualization,
+    toggleUnitSystem,
   };
 }
 
