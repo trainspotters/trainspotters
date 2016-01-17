@@ -8,7 +8,7 @@ import {
 } from '../actions/toggleVisualization';
 
 const SwitchVisualization = ({journeysDayVisualization, timeDayVisualization, distanceDayVisualization, toggleVisualization}) => {
-  const { dayTableVisualization, journeysPerDay, timePerDay, distancePerDay } = toggleVisualization;
+  const { journeysPerDay, timePerDay, distancePerDay } = toggleVisualization;
 
   return (
     <div className={"switch-toggle"}>
