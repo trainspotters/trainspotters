@@ -7,7 +7,8 @@ var config = module.exports = {
   entry: {
     app: [
       './src/index.jsx',
-      './style/index.css'
+      './style/milligram.min.css',
+      './style/index.css',
     ]
   },
   devtool: 'inline-source-map',

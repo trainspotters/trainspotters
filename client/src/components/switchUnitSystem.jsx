@@ -11,8 +11,8 @@ const SwitchUnitSystem = ({metricSystem, imperialSystem, toggleUnitSystem}) => {
   const { metric, imperial } = toggleUnitSystem;
 
   return (
-    <div>
-      <div>
+    <div className="row switch-unit-system">
+      <div className="column column-25">
         <input
           id={"unit1"}
           type={"radio"}
@@ -23,6 +23,8 @@ const SwitchUnitSystem = ({metricSystem, imperialSystem, toggleUnitSystem}) => {
           htmlFor={"unit1"}
           name={"toggleUnitSystem"}
         >Metric system</label>
+      </div>
+      <div className="column column-25">
         <input
           id={"unit2"}
           type={"radio"}
