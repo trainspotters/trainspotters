@@ -24,6 +24,15 @@ export default class MultiwayTextInput extends Component {
     }
   }
 
+  clickInputFile(){
+    const input = document.getElementById('inputFile');
+    if(input && document.createEvent) {
+      const evt = document.createEvent("MouseEvents");
+      evt.initEvent("click", true, false);
+      input.dispatchEvent(evt);
+    }
+  }
+
   onReadStart(){
     console.log('on read start');
   }
@@ -41,9 +50,11 @@ export default class MultiwayTextInput extends Component {
   }
 
   render(){
-    return <TextFileDropZone onActive={this.onDragActive} onDeactive={this.onDragDeactive} onReadStart={this.onReadStart} onTexts={this.onTexts}>
+    return <div className="drop-zone">
+      <TextFileDropZone onActive={this.onDragActive} onDeactive={this.onDragDeactive} onReadStart={this.onReadStart} onTexts={this.onTexts}>
       { this.renderContent() }
-    </TextFileDropZone>
+      </TextFileDropZone>
+    </div>
   }
 
   renderContent() {
@@ -54,10 +65,23 @@ export default class MultiwayTextInput extends Component {
     if (isDragActive) {
       return <div>DROP YOUR FILES HERE</div>
     } else {
-      return <div>
-        <textarea ref={ node => this.textarea = node }></textarea>
-        <button onClick={() => { this.onTexts([this.textarea.value]) }}>Parse</button>
-        <TextFileInput onTexts={this.onTexts}></TextFileInput>
+      return <div className="row">
+        <div className="column column-50">
+          <textarea ref={ node => this.textarea = node }></textarea>
+        </div>
+        <div className="column column-25">
+          <button className="button button-outline full-width" onClick={this.clickInputFile}>Select CSV files...</button>
+          <TextFileInput
+            style={{display: 'none'}}
+            id="inputFile"
+            accept=".csv"
+            multiple
+            onTexts={this.onTexts}
+          />
+        </div>
+        <div className="column column-25">
+          <button className="button full-width" onClick={() => { this.onTexts([this.textarea.value]) }}>Parse</button>
+        </div>
       </div>
     }
   }
