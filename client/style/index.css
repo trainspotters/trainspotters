@@ -10,6 +10,28 @@
   width: 5.2rem;
 }
 
+.multiway-text-input-container {
+  height: 100px;
+}
+
+.multiway-text-input-container--dropzone {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100px;
+}
+
+.dropzone--active {
+  background-color: #eaeaea;
+  position: absolute;
+  width: 100%;
+  height: 90%;
+  border-radius: 8px;
+  color: #f4f5f6;
+  font-size: 5.4rem;
+  text-align: center;
+}
+
 .wrapper {
   position: relative;
   display: block;
@@ -81,10 +103,6 @@
 
 .full-width {
   width: 100%;
-}
-
-.drop-zone {
-  height: 100px;
 }
 
 .wday {

@@ -50,9 +50,13 @@ export default class MultiwayTextInput extends Component {
   }
 
   render(){
-    return <div className="drop-zone">
-      <TextFileDropZone onActive={this.onDragActive} onDeactive={this.onDragDeactive} onReadStart={this.onReadStart} onTexts={this.onTexts}>
-      { this.renderContent() }
+    return <div className="multiway-text-input-container">
+      <TextFileDropZone
+        onActive={this.onDragActive}
+        onDeactive={this.onDragDeactive}
+        onReadStart={this.onReadStart}
+        onTexts={this.onTexts}>
+        { this.renderContent() }
       </TextFileDropZone>
     </div>
   }
@@ -63,7 +67,11 @@ export default class MultiwayTextInput extends Component {
     } = this.state;
 
     if (isDragActive) {
-      return <div>DROP YOUR FILES HERE</div>
+      return <div className="multiway-text-input-container--dropzone">
+        <div className="dropzone--active">
+          <i className="fa fa-file-text-o"></i>
+        </div>
+      </div>
     } else {
       return <div className="row">
         <div className="column column-50">
