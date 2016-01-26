@@ -24,11 +24,39 @@ export const RecordsStat = ({records, toggleUnitSystem}) => {
     `${formatMeterToKilometer(totalDistance)} km` :
     `${formatMeterToMile(totalDistance)} miles`;
 
-  return (<div>
-    <div>Journeys cumulative duration: {journeysTime}.</div>
-    <div>Journeys cumulative distance: {distanceString}.</div>
-    <div>Average journey time: {avgJourneyTime}.</div>
-    <div>Underground journeys count: {twoSideJourneysCount}.</div>
-    <div>Bus journeys count: {busJourneys}.</div>
-  </div>);
+  return <div className="row summary-main">
+    <div className="column">
+      <div className="summary-main--icon">
+        <i className="fa fa-clock-o"></i>
+      </div>
+      <div className="summary-main--value">
+        <p>{journeysTime}</p>
+        <p>(avg. {avgJourneyTime})</p>
+      </div>
+    </div>
+    <div className="column">
+      <div className="summary-main--icon">
+        <i className="fa fa-road"></i>
+      </div>
+      <div className="summary-main--value">
+        {distanceString}
+      </div>
+    </div>
+    <div className="column">
+      <div className="summary-main--icon">
+        <i className="fa fa-subway"></i>
+      </div>
+      <div className="summary-main--value">
+        {twoSideJourneysCount}
+      </div>
+    </div>
+    <div className="column">
+      <div className="summary-main--icon">
+        <i className="fa fa-bus"></i>
+      </div>
+      <div className="summary-main--value">
+        {busJourneys}
+      </div>
+    </div>
+  </div>
 }

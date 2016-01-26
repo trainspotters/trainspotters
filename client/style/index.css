@@ -105,6 +105,29 @@
   width: 100%;
 }
 
+.summary-main {
+  margin: 20px 0;
+}
+
+.summary-main--icon {
+  width: 100%;
+  text-align: center;
+  font-size: 8rem;
+  color: #da963c;
+}
+
+.summary-main--value {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 6.4rem;
+}
+
+.summary-main--value p {
+  margin: 0;
+  line-height: 3.2rem;
+}
+
 .wday {
   font: 9px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   fill: #ccc;
