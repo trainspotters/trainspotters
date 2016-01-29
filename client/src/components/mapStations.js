@@ -47,7 +47,7 @@ export class MapStations extends Component {
     });
 
     return (
-      <Map style={{width: "100%", height: "500px"}} center={position} zoom={12}>
+      <Map style={{width: "100%", height: "500px"}} center={position} zoom={12} minZoom={10}>
         <TileLayer
           url='https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'
           id='vjo.ofhbpcpo'
