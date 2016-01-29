@@ -11,7 +11,7 @@ const SwitchVisualization = ({journeysDayVisualization, timeDayVisualization, di
   const { journeysPerDay, timePerDay, distancePerDay } = toggleVisualization;
 
   return (
-    <div className={"switch-toggle"}>
+    <div className={"switch switch-toggle--viz"}>
       <div>
         <input
           id={"r1"}

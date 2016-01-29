@@ -16,12 +16,26 @@ const RecordsVisualization = ({records, selectedDays, clickDay, toggleVisualizat
 
   return (
     <div>
-      <SwitchUnitSystem />
       <RecordsStat
         records={records}
         toggleUnitSystem={toggleUnitSystem}
       />
-      <SwitchVisualization />
+      <div className="row filters">
+        <div className="column column-25">
+          <button className="button full-width">Tube</button>
+        </div>
+        <div className="column column-25">
+          <button className="button full-width">Bus</button>
+        </div>
+        <div className="column column-50">
+          <SwitchUnitSystem />
+        </div>
+      </div>
+      <div className="row filters">
+        <div className="column column-50 column-offset-50">
+          <SwitchVisualization />
+        </div>
+      </div>
       <PerDayTable
         records={records}
         selectedDays={selectedDays}

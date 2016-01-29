@@ -109,6 +109,10 @@
   margin: 20px 0;
 }
 
+.filters {
+  margin: 10px 0;
+}
+
 .summary-main--icon {
   width: 100%;
   text-align: center;
@@ -139,40 +143,59 @@
   font: 10px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-.switch-unit-system label {
-  display: inline;
-  margin-left: 1rem;
-}
-
-.switch-toggle div {
-  width: 500px;
+.switch {
+  width: 100%;
   overflow: hidden;
 }
 
-.switch-toggle input {
+.switch input {
   position: absolute;
   left: 0;
   opacity: 0;
 }
 
-.switch-toggle label {
-  width: 30%;
-  position: relative;
-  z-index: 2;
-  display: block;
+.switch label {
+  box-sizing: border-box;
+  display: inline-block;
   float: left;
   margin: 0;
-  text-align: center;
+  font-size: 1.1rem;
+  line-height: 3.8rem;
+  height: 3.8rem;
+  border: 1px solid #da963c;
+  color: #da963c;
+  letter-spacing: 0.1rem;
   cursor: pointer;
-  line-height: 2em;
-  border: 1px solid #000;
-  background: #777;
-  color: #ccc;
-  box-shadow: inset 0px 2px 20px 2px #444;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: none;
 }
 
-.switch-toggle input:checked + label {
-  background: #FFF;
-  color: #000;
-  box-shadow: none;
+.switch label:hover {
+  color: #606c76;
+}
+
+.switch input:checked + label {
+  background: #da963c;
+  color: #FFF;
+}
+
+.switch label:first-of-type {
+  border-radius: 0.4rem 0 0 0.4rem;
+  border-right: none;
+}
+
+.switch label:last-of-type {
+  border-radius: 0 0.4rem 0.4rem 0;
+  border-left: none;
+}
+
+.switch-toggle--viz label {
+  width: 33.33%;
+}
+
+.switch-toggle--system label {
+  width: 50%;
 }

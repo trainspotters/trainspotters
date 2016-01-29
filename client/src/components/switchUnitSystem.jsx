@@ -11,31 +11,27 @@ const SwitchUnitSystem = ({metricSystem, imperialSystem, toggleUnitSystem}) => {
   const { metric, imperial } = toggleUnitSystem;
 
   return (
-    <div className="row switch-unit-system">
-      <div className="column column-25">
-        <input
-          id={"unit1"}
-          type={"radio"}
-          checked={metric}
-          onChange={() => { metricSystem() }}
-        />
-        <label
-          htmlFor={"unit1"}
-          name={"toggleUnitSystem"}
-        >Metric system</label>
-      </div>
-      <div className="column column-25">
-        <input
-          id={"unit2"}
-          type={"radio"}
-          checked={imperial}
-          onChange={() => { imperialSystem() }}
-        />
-        <label
-          htmlFor={"unit2"}
-          name={"toggleUnitSystem"}
-        >Imperial system</label>
-      </div>
+    <div className="switch switch-toggle--system">
+      <input
+        id={"unit1"}
+        type={"radio"}
+        checked={metric}
+        onChange={() => { metricSystem() }}
+      />
+      <label
+        htmlFor={"unit1"}
+        name={"toggleUnitSystem"}
+      >Metric system</label>
+      <input
+        id={"unit2"}
+        type={"radio"}
+        checked={imperial}
+        onChange={() => { imperialSystem() }}
+      />
+      <label
+        htmlFor={"unit2"}
+        name={"toggleUnitSystem"}
+      >Imperial system</label>
     </div>
   );
 };
