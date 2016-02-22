@@ -5,6 +5,7 @@ import { RecordsStat } from '../components/recordsStat.jsx';
 import SwitchUnitSystem from '../components/switchUnitSystem';
 import SwitchVisualization from '../components/switchVisualization';
 import { MapStations } from '../components/mapStations.js';
+import { TopStations } from '../components/topStations.js';
 import { PerDayTable } from '../components/perDaysTable.jsx';
 import RecordList from '../components/recordList.jsx';
 import { selectedRecords } from '../recordsUtils.js';
@@ -47,6 +48,9 @@ const RecordsVisualization = ({records, selectedDays, clickDay, toggleVisualizat
         toggleUnitSystem={toggleUnitSystem}
       />
       <MapStations
+        records={records}
+      />
+      <TopStations
         records={records}
       />
     </div>
